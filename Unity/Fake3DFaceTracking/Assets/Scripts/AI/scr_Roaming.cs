@@ -56,41 +56,14 @@ public class scr_Roaming : MonoBehaviour {
             }
         }
 
-
-
     }
-
-    private void FixedUpdate()
-    {
-        //movForward = transform.forward * 1 * Time.deltaTime;
-        //movement = movForward * movSpeed;
-        //movement = Vector3.forward * movSpeed * Time.deltaTime;
-    }
-
-    //public void Roaming()
-    //{
-
-        //if (vision.hitWall)
-        //{
-        //    transform.Rotate(Vector3.up * Time.deltaTime * rotSpeed);
-        //}
-        //else
-        //{
-            
-        //    //movement.y = rb.velocity.y;
-        //    //rb.velocity = movement;
-        //    transform.Translate(movement * 1);
-
-        //}
-
-    //}
 
     public IEnumerator Roaming()
     {
         int rotDuration = Random.Range(1, 3);
-        int rotatePause = Random.Range(1, 4);
+        int rotatePause = Random.Range(0, 4);
         int rotateLorR = Random.Range(0, 3);
-        int roamPause = Random.Range(1, 4);
+        int roamPause = Random.Range(0, 2);
         int roamDuration = Random.Range(1, 5);
 
         isNewWanderLoc = false;

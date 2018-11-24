@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tamagochi
   - Wall
+  - Eyes
   layers:
   - Default
   - TransparentFX
