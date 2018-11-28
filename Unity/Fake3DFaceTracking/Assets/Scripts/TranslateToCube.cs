@@ -26,7 +26,7 @@ public class TranslateToCube : MonoBehaviour
 
     void Update()
     {
-        // addedPos = Vector3.Lerp(addedPos, (new Vector3(fTInput.X, fTInput.Y, -fTInput.Z) * positionScale), positionLerpRate * Time.deltaTime);
+        addedPos = Vector3.Lerp(addedPos, (new Vector3(fTInput.X, -fTInput.Y, 0f) * positionScale), positionLerpRate * Time.deltaTime);
         addedEul = new Vector3(
            Mathf.LerpAngle(addedEul.x, ((useRAWData == true ? fTInput.RawY : fTInput.Y) / 500f) * rotationScale, rotationLerpRate * Time.deltaTime),
            Mathf.LerpAngle(addedEul.y, ((useRAWData == true ? fTInput.RawX : fTInput.X) / 500f) * rotationScale, rotationLerpRate * Time.deltaTime),
