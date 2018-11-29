@@ -33,9 +33,6 @@ public class Script_Arduino : MonoBehaviour
 
 	void Update()
 	{
-
-		//Debug.Log(Timer);
-
 	    if (stream.IsOpen)
         {
 			try
@@ -47,63 +44,25 @@ public class Script_Arduino : MonoBehaviour
 				
 			}
         }
-
-		if (InputSwitch == true)
-		{
-			Timer += 1;
-	 		//Debug.Log(Timer);
-		}
-
-		if (Timer == 1)
-		{
-			TimerBool = true;
-		}
-
-		if (Timer > 1)
-		{
-			TimerBool = false;
-		}
-
-		if (Timer == 200)
-		{
-			Timer = 0;
-			Debug.Log("Timer Finished");
-			InputSwitch = false;
-		}
-
-		if (TimerBool == true)
-		{
-			//Debug.Log("Tik");
-		}
-
-		//Placeholder
 	}
 
 
 	void ScreenTik (int Tik)
 	{
-		if (Tik == 1)
-		{
-            if (!pointLights.activeSelf)
-                pointLights.SetActive(true);
-            else
+        if (Tik == 1)
+        {
+            Debug.Log("Lampje");
+
+            if (pointLights.activeSelf)
                 pointLights.SetActive(false);
-		}
+            else
+                pointLights.SetActive(true);
+        }
 
-		if (Tik == 2 && InputSwitch == false)
+		if (Tik == 2)
 		{
-            if (ignoreTime <= 0)
-            {
-                Debug.Log("Tik");
-
-                if (playerStats.playerState != scr_playerStats.states.Respond && playerStats.playerState != scr_playerStats.states.Interact)
-                    playerStats.playerState = scr_playerStats.states.Respond;
-            }
-
-            ignoreTime--;
-
-			InputSwitch = true;
-			
+            Debug.Log("Tik");
+            playerStats.playerState = scr_playerStats.states.Respond;
 		}
 	}
 
