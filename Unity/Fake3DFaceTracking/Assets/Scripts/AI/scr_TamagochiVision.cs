@@ -13,14 +13,14 @@ public class scr_TamagochiVision : MonoBehaviour {
     // Use this for initialization
     void Start () {
         direction = transform;
-        rayCastRange = 1f;
+        rayCastRange = 2f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
         Vector3 physicsCentre = (this.transform.position + this.GetComponent<CapsuleCollider>().center) + new Vector3(0, 0, 0);
-        Debug.DrawRay(physicsCentre + new Vector3(0, -.5f, 0), Vector3.forward * rayCastRange, Color.yellow, rayCastRange);//draws a raycast to visualy see wheither or not the player is on the ground
+        //Debug.DrawRay(physicsCentre + new Vector3(0, 2f, 0), Vector3.forward * rayCastRange, Color.yellow, rayCastRange);//draws a raycast to visualy see wheither or not the player is on the ground
 
         if (Physics.Raycast((transform.position - new Vector3(0, 0, 0)), transform.forward, out hitFront, rayCastRange))
         {
@@ -31,17 +31,11 @@ public class scr_TamagochiVision : MonoBehaviour {
                     hitWall = true;
                 }
             }
-
-
         }
         else
         {
             hitWall = false;
         }
-        Debug.Log(hitWall);
-        
-
-
-
     }
+
 }

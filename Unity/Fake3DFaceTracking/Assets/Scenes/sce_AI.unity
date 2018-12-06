@@ -194,7 +194,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400086, guid: 9581ef24ed40fb64ca8d6cf6f97214e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02
+      value: 199
       objectReference: {fileID: 0}
     - target: {fileID: 400086, guid: 9581ef24ed40fb64ca8d6cf6f97214e5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -532,7 +532,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400080, guid: 6e3fb51d93f1ff14fb9dc8073dc63ce1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.57
+      value: 702
       objectReference: {fileID: 0}
     - target: {fileID: 400080, guid: 6e3fb51d93f1ff14fb9dc8073dc63ce1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -540,7 +540,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400080, guid: 6e3fb51d93f1ff14fb9dc8073dc63ce1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.64
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400080, guid: 6e3fb51d93f1ff14fb9dc8073dc63ce1, type: 3}
       propertyPath: m_LocalRotation.x
@@ -946,6 +946,7 @@ GameObject:
   - component: {fileID: 1904409719}
   - component: {fileID: 1904409720}
   - component: {fileID: 1904409721}
+  - component: {fileID: 1904409722}
   m_Layer: 0
   m_Name: _Tamagochi
   m_TagString: Tamagochi
@@ -1014,7 +1015,7 @@ MonoBehaviour:
   isNewWanderLoc: 0
   isRotatingLeft: 0
   isRotatingRight: 0
-  isRoaming: 0
+  isRoaming: 1
   roamBool: 0
 --- !u!114 &1904409714
 MonoBehaviour:
@@ -1098,7 +1099,6 @@ MonoBehaviour:
   isPlaying: 0
   head: {fileID: 834160442}
   faceForward: {fileID: 1712285642}
-  screenPosEyes: {fileID: 0}
   screen: {fileID: 0}
 --- !u!114 &1904409719
 MonoBehaviour:
@@ -1125,7 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd45b3a5a34ef241bce515cb4e8b993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenTap: {fileID: 2041007905}
+  screenTap: {fileID: 1714802547}
   tamagochi: {fileID: 1904409712}
   head: {fileID: 834160442}
   faceForward: {fileID: 1712285642}
@@ -1148,6 +1148,17 @@ MonoBehaviour:
   screenPosEyes: {fileID: 1714802547}
   playing: {fileID: 1904409718}
   screenTap: {fileID: 1904409720}
+--- !u!114 &1904409722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1904409709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b541492fec379c64d8d50e49052d0e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1943515868
 Prefab:
   m_ObjectHideFlags: 0
@@ -1157,7 +1168,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400080, guid: 6ab6e9e29b2122a408aefd18d5a5a67c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.35
+      value: -483
       objectReference: {fileID: 0}
     - target: {fileID: 400080, guid: 6ab6e9e29b2122a408aefd18d5a5a67c, type: 3}
       propertyPath: m_LocalPosition.y

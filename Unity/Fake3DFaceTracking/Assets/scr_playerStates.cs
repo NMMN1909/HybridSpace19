@@ -14,18 +14,15 @@ public class scr_playerStates : MonoBehaviour
         // Scroll through the different playerStates and run the appropriate functions
         switch (playerStats.playerState)
         {
-            // The switch playerState
-            case scr_playerStats.states.Thinking:
-                playerFunctions.thinking();
-                break;
-
             // The idle playerState
             case scr_playerStats.states.Idle:
+                playerFunctions.thinking();
                 playerFunctions.idle(playerStats.idleDurationMin, playerStats.idleDurationMax);
                 break;
 
             // The wandering playerState
             case scr_playerStats.states.Wandering:
+                playerFunctions.thinking();
                 playerFunctions.wandering(playerStats.movementSpeed, playerStats.wanderingDurationMin, playerStats.wanderingDurationMax);
                 break;
 
@@ -37,6 +34,31 @@ public class scr_playerStates : MonoBehaviour
             // The interact playerState
             case scr_playerStats.states.Interact:
                 playerFunctions.interact();
+                break;
+
+            // The sleep playerState
+            case scr_playerStats.states.Annoy:
+                playerFunctions.thinking();
+                playerFunctions.annoy();
+                break;
+
+
+            // The sleep playerState
+            case scr_playerStats.states.Wake:
+                playerFunctions.thinking();
+                playerFunctions.wake();
+                break;
+
+            // The sleep playerState
+            case scr_playerStats.states.Sleep:
+                playerFunctions.thinking();
+                playerFunctions.sleep();
+                break;
+
+            // The sleep playerState
+            case scr_playerStats.states.Playing:
+                playerFunctions.thinking();
+                playerFunctions.playing();
                 break;
         }
     }

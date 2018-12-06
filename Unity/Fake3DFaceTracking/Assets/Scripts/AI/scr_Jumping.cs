@@ -26,7 +26,6 @@ public class scr_Jumping : MonoBehaviour {
         {
             PerformJump();
         }
-
     }
 
     private void PerformJump()
