@@ -42,7 +42,6 @@ public class scr_playerStates : MonoBehaviour
                 playerFunctions.annoy();
                 break;
 
-
             // The sleep playerState
             case scr_playerStats.states.Wake:
                 playerFunctions.thinking();
@@ -59,6 +58,14 @@ public class scr_playerStates : MonoBehaviour
             case scr_playerStats.states.Playing:
                 playerFunctions.thinking();
                 playerFunctions.playing();
+                break;
+
+            case scr_playerStats.states.Grow:
+                playerFunctions.grow(.0005f, .225f);
+                break;
+
+            case scr_playerStats.states.Colorize:
+                playerFunctions.colorize();
                 break;
         }
     }

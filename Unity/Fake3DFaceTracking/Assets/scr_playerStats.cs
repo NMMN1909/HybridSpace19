@@ -12,10 +12,11 @@ public class scr_playerStats : MonoBehaviour
     public Slider amusementSlider;
 
     // 
-    public enum states { Idle, Wandering, Respond, Interact, Annoy, Wake, Sleep, Playing };
+    public enum states { Idle, Wandering, Respond, Interact, Annoy, Wake, Sleep, Playing, Grow, Colorize };
 
     // Initialize the public variables
     public states playerState;
+
     public float movementSpeed;
     public float wanderingDurationMin;
     public float wanderingDurationMax;
@@ -31,6 +32,9 @@ public class scr_playerStats : MonoBehaviour
     public float happiness;
     public float happyToSad;
     public float happyToPlay;
+    public float amusementToHappy;
+    public float amusementToSad;
+
     public bool isAwake;
 
     // Use this for initialization
@@ -38,12 +42,14 @@ public class scr_playerStats : MonoBehaviour
     {
         isAwake = true;
         energy = 100f;
-        amusement = 100f;
-        amusementToBored = 50f;
+        amusement = 50f;
+        amusementToBored = 25f;
         energeticToTired = 30f;
         tiredToSleep = 0f;
-        sleepToEnergetic = 40f;
+        sleepToEnergetic = 100f;
         happyToPlay = 60f;
+        amusementToHappy = 75f;
+        amusementToSad = 35f;
     }
 
     // Update is called once per frame
@@ -51,30 +57,36 @@ public class scr_playerStats : MonoBehaviour
     {
         if (playerState != scr_playerStats.states.Sleep)
         {
-            energy -= .05f;
-            amusement -= .2f;
+            energy -= .025f;
+            amusement -= .025f;
         }
 
         if (!isAwake && energy <= sleepToEnergetic)
-        {
             energy += .2f;
-        }
+
+        if (amusement >= amusementToHappy)
+            happiness += .2f;
+
+        if (amusement <= amusementToSad)
+            happiness -= .05f;
 
         if (Input.GetKeyDown(KeyCode.Z))
-            energy += 10;
+            energy += 10f;
+
         if (Input.GetKeyDown(KeyCode.X))
             amusement += 10f;
+
         if (Input.GetKeyDown(KeyCode.C))
             happiness += 10f;
 
-        if (amusement < 0)
-            amusement = 0;
-        if (happiness < 0)
-            happiness = 0;
+        if (amusement < 0f)
+            amusement = 0f;
+        if (happiness < 0f)
+            happiness = 0f;
 
 
-        energySlider.value = energy /100;
-        happySlider.value = happiness / 100;
-        amusementSlider.value = amusement/ 100;
+        energySlider.value = energy / 100f;
+        happySlider.value = happiness / 100f;
+        amusementSlider.value = amusement / 100f;
     }
 }

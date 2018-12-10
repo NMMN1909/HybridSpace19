@@ -12,11 +12,15 @@ public class Script_Arduino : MonoBehaviour
 	string distance;
 	Boolean InputSwitch;
 	Boolean TimerBool;
+    bool isInteracting;
 
     int ignoreTime = 1;
 
     public scr_playerStats playerStats;
     public GameObject pointLights;
+    public GameObject player;
+
+    string str;
 
 	void Start() 
 	{
@@ -33,6 +37,25 @@ public class Script_Arduino : MonoBehaviour
 
 	void Update()
 	{
+        if (player.GetComponent<scr_playerStats>().playerState == scr_playerStats.states.Interact)
+        {
+            if (!isInteracting)
+            {
+                stream.Write("1");
+                Debug.Log("Light On");
+                isInteracting = true;
+            }
+        }
+        else
+        {
+            if (isInteracting)
+            {
+                stream.Write("0");
+                Debug.Log("Light Off");
+                isInteracting = false;
+            } 
+        }
+
 	    if (stream.IsOpen)
         {
 			try
@@ -47,28 +70,39 @@ public class Script_Arduino : MonoBehaviour
 	}
 
 
-	void ScreenTik (int Tik)
+	void ScreenTik (int id)
 	{
-        if (Tik == 1)
+        switch (id)
         {
-            Debug.Log("Lampje");
+            // Lampje
+            case 1:
+                if (pointLights.activeSelf)
+                    pointLights.SetActive(false);
+                else
+                    pointLights.SetActive(true);
+                break;
 
-            if (pointLights.activeSelf)
-                pointLights.SetActive(false);
-            else
-                pointLights.SetActive(true);
+            // Tikken
+            case 2:
+                if (playerStats.isAwake)
+                    playerStats.playerState = scr_playerStats.states.Respond;
+                break;
+
+            // Groene kaart
+            case 9:
+                if (playerStats.playerState == scr_playerStats.states.Interact)
+                    playerStats.playerState = scr_playerStats.states.Grow;
+                break;
+
+            // Blauwe kaart
+            case 10:
+                if (playerStats.playerState == scr_playerStats.states.Interact)
+                    playerStats.playerState = scr_playerStats.states.Colorize;
+                break;
         }
-
-		if (Tik == 2)
-		{
-            Debug.Log("Tik");
-            playerStats.playerState = scr_playerStats.states.Respond;
-		}
 	}
 
-	private void DataReceivedHandler(
-                         object sender,
-                         SerialDataReceivedEventArgs e)
+	private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
      {
          SerialPort sp = (SerialPort)sender;
          string distance = sp.ReadLine();
