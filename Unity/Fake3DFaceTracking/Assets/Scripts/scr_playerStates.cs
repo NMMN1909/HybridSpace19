@@ -68,5 +68,34 @@ public class scr_playerStates : MonoBehaviour
                 playerFunctions.colorize();
                 break;
         }
+
+        DebugController();
+
+    }
+
+    private void DebugController()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+            playerStats.energy += 10f;
+
+        if (Input.GetKeyDown(KeyCode.X))
+            playerStats.happiness += 10f;
+
+        if (Input.GetKeyDown(KeyCode.C))
+            playerStats.amusement += 10f;
+
+        if (Input.GetKeyDown(KeyCode.V))
+            playerStats.affection += 10f;
+
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            playerStats.playerState = scr_playerStats.states.Idle;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            playerStats.playerState = scr_playerStats.states.Respond;
+        }
     }
 }

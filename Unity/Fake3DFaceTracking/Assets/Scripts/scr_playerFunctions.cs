@@ -5,9 +5,14 @@ using UnityEngine;
 public class scr_playerFunctions : MonoBehaviour
 {
     //Reference
-    public scr_TamagochiVision vision;
     public scr_playerGrounded groundCheck;
     public Rigidbody rb;
+    public Transform target;
+    public scr_playerStats playerStats;
+    public Transform interactionManagerTransform;
+    public Transform userHeadTransform;
+    public Transform creatureHeadTransform;
+    public Animation animWalk;
 
     public GameObject modelAwake;
     public GameObject modelAsleep;
@@ -19,48 +24,8 @@ public class scr_playerFunctions : MonoBehaviour
     private float materialLerpProgress;
     private Material targetMat0;
     private Material targetMat1;
-    
-    // Initialize the private variables
-    private bool thinkingInit;
-    private int randomState;
 
-    private bool idleInit;
-    private float idleAlarm;
-
-    private bool wanderingInit;
-    private float wanderingAlarm;
-    private float wanderingDirection;
-
-    private bool interactInit;
-    private float interactAlarm;
-
-    private bool colorizeInit;
-
-    private bool isGrowing = true;
-
-    public float jumpForce = 4f;
-
-
-    //Playing Stats
-    public Transform target;
-    public float chaseSpeed = 4f;
-    public float chaseRotSpeed = 10f;
     const float EPSILON = 0.1f;
-
-    [SerializeField]
-    private float wanderingPauseAlarm;
-    [SerializeField]
-    private float wanderingPauseCounter = 0f;
-    [SerializeField]
-    private bool wanderingPauseBool = true;
-
-    // Initialize the public variables
-    public scr_playerStats playerStats;
-
-    public Transform interactionManagerTransform;
-
-    public Transform userHeadTransform;
-    public Transform creatureHeadTransform;
 
     // Think of what state to switch to next
     public void thinking()
@@ -82,20 +47,6 @@ public class scr_playerFunctions : MonoBehaviour
         if (playerStats.amusement >= 100f)
             playerStats.playerState = scr_playerStats.states.Wandering;
 
-        /*
-        if (playerStats.energy < playerStats.tiredToSleep && playerStats.isAwake)
-        {
-            playerStats.playerState = scr_playerStats.states.Sleep;
-        }
-        else if (playerStats.happiness > playerStats.happyToPlay && playerStats.amusement > playerStats.amusementToBored && playerStats.isAwake)
-        {
-            playerStats.playerState = scr_playerStats.states.Playing;
-        }
-        else if (playerStats.amusement < playerStats.amusementToBored && playerStats.isAwake)
-        {
-            playerStats.playerState = scr_playerStats.states.Wandering;
-        }
-        */
 
         //Tamagochi is Asleep
         if (playerStats.energy > playerStats.sleepToEnergetic && !playerStats.isAwake)
@@ -108,66 +59,60 @@ public class scr_playerFunctions : MonoBehaviour
     public void idle(float idleDurationMin, float idleDurationMax)
     {
         // Run this code once
-        if (!idleInit)
+        if (!playerStats.idleInit)
         {
             // Idle state start code
-            idleAlarm = Random.Range(idleDurationMin, idleDurationMax);
+            playerStats.idleAlarm = Random.Range(idleDurationMin, idleDurationMax);
 
             // Reset the idle initialization boolean
-            idleInit = true;
+            playerStats.idleInit = true;
         }
-
         playerStats.playerState = scr_playerStats.states.Wandering;
     }
 
     // Wander in a random direction
     public void wandering(float movementSpeed, float wanderingDurationMin, float wanderingDurationMax)
     {
-        if (wanderingPauseBool)
+        animWalk.Play("Creature_Walk");
+        if (playerStats.wanderingPauseBool)
         {
-            wanderingPauseAlarm = Random.Range(5, 30);
-            wanderingPauseBool = false;
-            wanderingInit = false;
+            playerStats.wanderingPauseAlarm = Random.Range(5, 30);
+            playerStats.wanderingPauseBool = false;
+            playerStats.wanderingInit = false;
         }
 
-        if (wanderingPauseCounter > wanderingPauseAlarm)
+        if (playerStats.wanderingPauseCounter > playerStats.wanderingPauseAlarm)
         {
             // Run this code once
-            if (!wanderingInit)
+            if (!playerStats.wanderingInit)
             {
                 // Wandering state start code
-                wanderingAlarm = Random.Range(wanderingDurationMin, wanderingDurationMax);
-                wanderingDirection = Random.Range(0f, 360f);
+                playerStats.wanderingAlarm = Random.Range(wanderingDurationMin, wanderingDurationMax);
+                playerStats.wanderingDirection = Random.Range(0f, 360f);
 
                 // Reset the wandering initialization boolean
-                wanderingInit = true;
-                wanderingPauseBool = true;
-                wanderingPauseCounter = 0f;
+                playerStats.wanderingInit = true;
+                playerStats.wanderingPauseBool = true;
+                playerStats.wanderingPauseCounter = 0f;
             }
         }
-        wanderingPauseCounter += .1f;
+        playerStats.wanderingPauseCounter += .1f;
+
+
 
 
         /* Run this code every frame
         Rotate the creature towards the randomly set direction */
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, wanderingDirection, transform.eulerAngles.z);
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, playerStats.wanderingDirection, transform.eulerAngles.z);
 
         // Move the creature forwards
         transform.position += (transform.forward * movementSpeed) * Time.deltaTime;
-
-        if (vision.hitWall)
-        {
-            wanderingDirection = Random.Range(90f, 270f);
-        }
-        else
-        {
-            vision.hitWall = false;
-        }
     }
 
     // 
     public void respond(float movementSpeed)
     {
+        animWalk.Play("Creature_Walk");
         // 
         transform.position = Vector3.MoveTowards(transform.position, interactionManagerTransform.position, movementSpeed / 50f);
 
@@ -186,20 +131,20 @@ public class scr_playerFunctions : MonoBehaviour
     public void interact()
     {
         // Run this code once
-        if (!interactInit)
+        if (!playerStats.interactInit)
         {
             // Idle state start code
-            interactAlarm = 1750f;
+            playerStats.interactAlarm = 1750f;
 
             // Reset the idle initialization boolean
-            interactInit = true;
+            playerStats.interactInit = true;
         }
 
-        interactAlarm--;
+        playerStats.interactAlarm--;
 
-        if (interactAlarm <= 0f)
+        if (playerStats.interactAlarm <= 0f)
         {
-            interactInit = false;
+            playerStats.interactInit = false;
             creatureHeadTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
             playerStats.playerState = scr_playerStats.states.Idle;
         }
@@ -234,11 +179,9 @@ public class scr_playerFunctions : MonoBehaviour
 
     public void annoy()
     {
-        Debug.Log("WAIT");
         if (groundCheck.grounded)
         {
-            this.rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Debug.Log("hello");
+            this.rb.AddForce(Vector3.up * playerStats.jumpForce, ForceMode.Impulse);
         }
     }
     
@@ -246,11 +189,10 @@ public class scr_playerFunctions : MonoBehaviour
     {
         if ((transform.position - target.position).magnitude > EPSILON)
         {
-            //move towards the player
-            //transform.position += transform.forward * chaseSpeed * Time.deltaTime;
+            //move towards the toy (target)
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.position.x, 0f, target.position.z), .025f);
             Vector3 targetDir = target.position - transform.position;
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, chaseRotSpeed, 0f);
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, playerStats.chaseRotSpeed, 0f);
             newDir.y = 0f;
             transform.rotation = Quaternion.LookRotation(newDir);
             playerStats.amusement += .075f;
@@ -259,19 +201,21 @@ public class scr_playerFunctions : MonoBehaviour
 
     public void grow(float speed, float target)
     {
-        if (transform.localScale.x >= target && isGrowing)
+        if (transform.localScale.x >= target && playerStats.isGrowing)
         {
-            isGrowing = false;
+            playerStats.affection += 10f;
+            playerStats.isGrowing = false;
             playerStats.playerState = scr_playerStats.states.Wandering;
         }
 
-        if (transform.localScale.x <= .1478281f && !isGrowing)
+        if (transform.localScale.x <= .1478281f && !playerStats.isGrowing)
         {
-            isGrowing = true;
+            playerStats.affection += 10f;
+            playerStats.isGrowing = true;
             playerStats.playerState = scr_playerStats.states.Wandering;
         }
 
-        if (isGrowing)
+        if (playerStats.isGrowing)
             transform.localScale += new Vector3(speed, speed, speed);
         else
             transform.localScale -= new Vector3(speed, speed, speed);
@@ -279,7 +223,7 @@ public class scr_playerFunctions : MonoBehaviour
 
     public void colorize()
     {
-        if (!colorizeInit)
+        if (!playerStats.colorizeInit)
         {
             materialLerpProgress = 0f;
 
@@ -289,7 +233,8 @@ public class scr_playerFunctions : MonoBehaviour
             while (targetMat1.color.Equals(targetMat0.color))
                 targetMat1 = creatureMaterials[Mathf.RoundToInt(Random.Range(0f, creatureMaterials.Length - 1f))];
 
-            colorizeInit = true;
+            playerStats.affection += 10f;
+            playerStats.colorizeInit = true;
         }
 
         materialLerpProgress += .01f;
@@ -297,7 +242,7 @@ public class scr_playerFunctions : MonoBehaviour
 
         if (materialLerpProgress >= 1f)
         {
-            colorizeInit = false;
+            playerStats.colorizeInit = false;
             playerStats.playerState = scr_playerStats.states.Wandering;
         }
     }

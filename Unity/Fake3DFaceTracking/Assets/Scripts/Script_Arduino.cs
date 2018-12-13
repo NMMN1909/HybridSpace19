@@ -7,7 +7,11 @@ using System.IO.Ports;
 
 public class Script_Arduino : MonoBehaviour 
 {
-	SerialPort stream = new SerialPort("COM3", 9600);
+    //Reference
+    public scr_Card card;
+
+
+    SerialPort stream = new SerialPort("COM3", 9600);
 	int Timer;
 	string distance;
 	Boolean InputSwitch;
@@ -64,14 +68,19 @@ public class Script_Arduino : MonoBehaviour
 			}
 			catch (System.Exception)
 			{
-				
-			}
+                card.cardInserted = false;
+            }
         }
 	}
 
 
 	void ScreenTik (int id)
 	{
+        if (id == 9 || id == 10)
+            card.cardInserted = true;
+        else
+            card.cardInserted = false;
+
         switch (id)
         {
             // Lampje
