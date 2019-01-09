@@ -73,11 +73,12 @@ public class Script_Arduino : MonoBehaviour
         }
 	}
 
-
 	void ScreenTik (int id)
 	{
         if (id == 9 || id == 10)
             card.cardInserted = true;
+
+        Debug.Log(id);
 
         switch (id)
         {
