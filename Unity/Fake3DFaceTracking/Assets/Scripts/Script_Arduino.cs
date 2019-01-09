@@ -9,7 +9,10 @@ public class Script_Arduino : MonoBehaviour
 {
     //Reference
     public scr_Card card;
-
+    public AI_StateMachine stateMachine;
+    public AI_Variables stats;
+    public GameObject pointLights;
+    public GameObject player;
 
     SerialPort stream = new SerialPort("COM3", 9600);
 	int Timer;
@@ -19,10 +22,6 @@ public class Script_Arduino : MonoBehaviour
     bool isInteracting;
 
     int ignoreTime = 1;
-
-    public scr_playerStats playerStats;
-    public GameObject pointLights;
-    public GameObject player;
 
     string str;
 
@@ -41,7 +40,7 @@ public class Script_Arduino : MonoBehaviour
 
 	void Update()
 	{
-        if (player.GetComponent<scr_playerStats>().playerState == scr_playerStats.states.Interact)
+        if (player.GetComponent<AI_StateMachine>().State == AI_StateMachine.state.Interact)
         {
             if (!isInteracting)
             {
@@ -68,7 +67,6 @@ public class Script_Arduino : MonoBehaviour
 			}
 			catch (System.Exception)
 			{
-                card.cardInserted = false;
             }
         }
 	}
@@ -76,10 +74,10 @@ public class Script_Arduino : MonoBehaviour
 
 	void ScreenTik (int id)
 	{
+        Debug.Log(id);
         if (id == 9 || id == 10)
             card.cardInserted = true;
-        else
-            card.cardInserted = false;
+
 
         switch (id)
         {
@@ -93,20 +91,25 @@ public class Script_Arduino : MonoBehaviour
 
             // Tikken
             case 2:
-                if (playerStats.isAwake)
-                    playerStats.playerState = scr_playerStats.states.Respond;
+                if (stats.isAwake)
+                    stateMachine.State = AI_StateMachine.state.Respond;
+                break;
+
+            //
+            case 8:
+                card.cardInserted = false;
                 break;
 
             // Groene kaart
             case 9:
-                if (playerStats.playerState == scr_playerStats.states.Interact)
-                    playerStats.playerState = scr_playerStats.states.Grow;
+                if (stateMachine.State == AI_StateMachine.state.Interact)
+                    stateMachine.State = AI_StateMachine.state.Grow;
                 break;
 
             // Blauwe kaart
             case 10:
-                if (playerStats.playerState == scr_playerStats.states.Interact)
-                    playerStats.playerState = scr_playerStats.states.Colorize;
+                if (stateMachine.State == AI_StateMachine.state.Interact)
+                    stateMachine.State = AI_StateMachine.state.Colorize;
                 break;
         }
 	}

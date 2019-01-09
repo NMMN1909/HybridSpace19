@@ -8,6 +8,7 @@ public class scr_Card : MonoBehaviour {
     private Renderer rend;
     public GameObject card;
     public Animation animCardGive;
+    public AudioSource audioSource;
 
     public float animDuration;
     public bool isGiven;
@@ -49,6 +50,7 @@ public class scr_Card : MonoBehaviour {
             rend.material.color = blueColor;
 
             animCardGive.Play("Card_Give");
+            audioSource.Play();
             isGiven = true;
             StartCoroutine(InputDelay());
         }
@@ -57,6 +59,7 @@ public class scr_Card : MonoBehaviour {
         {
             canGive = false;
             animCardGive.Play("Card_Take");
+            audioSource.Play();
             isGiven = false;
             StartCoroutine(InputDelay());
         }
