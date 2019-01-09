@@ -8,6 +8,7 @@ public class scr_Card : MonoBehaviour {
     private Renderer rend;
     public GameObject card;
     public Animation animCardGive;
+    public AudioSource audioSource;
 
     public float animDuration;
     public bool isGiven;
@@ -50,6 +51,7 @@ public class scr_Card : MonoBehaviour {
 
             animCardGive.Play("Card_Give");
             isGiven = true;
+            audioSource.Play();
             StartCoroutine(InputDelay());
         }
 
@@ -58,6 +60,7 @@ public class scr_Card : MonoBehaviour {
             canGive = false;
             animCardGive.Play("Card_Take");
             isGiven = false;
+            audioSource.Play();
             StartCoroutine(InputDelay());
         }
 	}

@@ -8,6 +8,7 @@ public class scr_ball : MonoBehaviour
     public Transform playerTransform;
     public scr_playerStats playerStats;
     public float force;
+    public AudioSource audioSource;
 
     // Initialize the private variables
     Rigidbody rigidBody;
@@ -27,6 +28,11 @@ public class scr_ball : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (playerStats.playerState == scr_playerStats.states.Playing)
+        {
             rigidBody.AddForce(playerTransform.forward * force);
+
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        } 
     }
 }
