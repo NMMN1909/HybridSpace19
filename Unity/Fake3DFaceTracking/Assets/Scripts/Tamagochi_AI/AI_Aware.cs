@@ -32,10 +32,10 @@ public class AI_Aware : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         AwareCheck();
-        //if(isAware)
-        //    tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(head.position), .5f);
-        //else
-        //    tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(this.transform.forward), .5f);
+        if (isAware)
+            tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(head.position), .5f);
+        else
+            tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(this.transform.forward), .5f);
     }
 
     private void LateUpdate()
@@ -52,7 +52,7 @@ public class AI_Aware : MonoBehaviour {
 
     public void Aware()
     {
-        if (canAware)
+        if (canAware && stats.isAwake)
         {
             StartCoroutine(AwareCycle());
             canAware = false;

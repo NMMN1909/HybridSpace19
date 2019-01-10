@@ -36,7 +36,7 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isIdle", true);
         else if(stateMachine.State == AI_StateMachine.state.WindowSlam)
             animController.SetBool("isWindowSlam", true);
-        else if (roaming.canMovForward || stateMachine.State == AI_StateMachine.state.Respond || stateMachine.State == AI_StateMachine.state.Upset)
+        else if (roaming.canMovForward || stateMachine.State == AI_StateMachine.state.Respond || stateMachine.State == AI_StateMachine.state.Upset || stateMachine.State == AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", true);
 
         if(stateMachine.State != AI_StateMachine.state.Sleep)
@@ -49,7 +49,7 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isNotice", false);
         if (stateMachine.State != AI_StateMachine.state.Interact)
             animController.SetBool("isIdle", false);
-        if (!roaming.canMovForward && stateMachine.State != AI_StateMachine.state.Respond && stateMachine.State != AI_StateMachine.state.Upset)
+        if (!roaming.canMovForward && stateMachine.State != AI_StateMachine.state.Respond && stateMachine.State != AI_StateMachine.state.Upset && stateMachine.State != AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", false);
     }
 

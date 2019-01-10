@@ -6,9 +6,10 @@ public class scr_ball : MonoBehaviour
 {
     // Initialize the public variables
     public Transform playerTransform;
-    public scr_playerStats playerStats;
+    public AI_StateMachine stateMachine;
     public float force;
     public AudioSource audioSource;
+    public Animator animController;
 
     // Initialize the private variables
     Rigidbody rigidBody;
@@ -27,8 +28,9 @@ public class scr_ball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (playerStats.playerState == scr_playerStats.states.Playing)
+        if (stateMachine.State == AI_StateMachine.state.Playing)
         {
+            animController.SetTrigger("isPlaying");
             rigidBody.AddForce(playerTransform.forward * force);
 
             if (!audioSource.isPlaying)

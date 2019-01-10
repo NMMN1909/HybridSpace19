@@ -15,6 +15,8 @@ public class AI_Variables : MonoBehaviour {
     public float awareDuration;
     public float windowSlamDuration;
 
+    public float chaseRotSpeed;
+
     //Conditions
     public float energy;
     public float happiness;
@@ -26,6 +28,8 @@ public class AI_Variables : MonoBehaviour {
     public float attentionToInteract;
 
     public float energyToWake;
+    public float amuseToAngry;
+    public float happyToSad;
 
     public bool isAwake;
 
@@ -43,13 +47,17 @@ public class AI_Variables : MonoBehaviour {
         awareDuration = 1.2f;
         windowSlamDuration = 10f; //Default 3f
         isAwake = true;
+        amuseToAngry = 20f;
+        happyToSad = 20f;
 
-        //Chance of Behavior State (20%(1/5) = fairly frequent)
-        idleSuccessRate = 10;
+    //Chance of Behavior State (20%(1/5) = fairly frequent)
+    idleSuccessRate = 10;
         roamingSuccessRate = 95;
         noticeSuccessRate = 15;
 
         attentionToInteract = 40f;
+
+        chaseRotSpeed = 6f;
 
         energy = 100f;
         happiness = 30f;

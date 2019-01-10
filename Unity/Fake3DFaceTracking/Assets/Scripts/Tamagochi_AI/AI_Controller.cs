@@ -20,6 +20,10 @@ public class AI_Controller : MonoBehaviour {
     private int awareRandom;
     private int respondCounter;
 
+    private int upsetTimer;
+    private int upsetCounter;
+    private bool canUpset;
+
     //Debug Reference
     public Slider energySlider;
     public Slider happySlider;
@@ -38,6 +42,9 @@ public class AI_Controller : MonoBehaviour {
         respondCounter = 0;
 
         canNewState = true;
+        canUpset = true;
+        upsetCounter = 0;
+        upsetTimer = 2500;
     }
 	
 	// Update is called once per frame
@@ -51,6 +58,8 @@ public class AI_Controller : MonoBehaviour {
     public void Brain()
     {
         //Behavior
+        upsetCounter += 1;
+
         if (stats.energy >= 70f)
         {
             stats.idleSuccessRate = 10;
@@ -66,7 +75,23 @@ public class AI_Controller : MonoBehaviour {
             stats.isAwake = false;
         }
 
-        if (stats.attention > 70 && stateMachine.State != AI_StateMachine.state.Interact)
+
+        //private int upsetTimer;
+        //private int upsetCounter;
+        //private bool canUpset;
+        if(upsetCounter > upsetTimer)
+        {
+            canUpset = true;
+            upsetCounter = 0;
+        }
+
+        if((stats.amusement < stats.amuseToAngry || stats.happiness < stats.happyToSad) && stateMachine.State != AI_StateMachine.state.WindowSlam && canUpset)
+        {
+            stateMachine.State = AI_StateMachine.state.Upset;
+            canUpset = false;
+        }
+
+        if (stats.attention > 70 && stateMachine.State != AI_StateMachine.state.Interact && stats.isAwake)
             stateMachine.State = AI_StateMachine.state.Respond;
 
         if (stateMachine.State == AI_StateMachine.state.Roaming || stateMachine.State == AI_StateMachine.state.Default)
@@ -86,7 +111,7 @@ public class AI_Controller : MonoBehaviour {
         else
             awareCounter = 0;
 
-        if(respondCounter == 6)
+        if(respondCounter == 6 && stats.isAwake)
         {
             stateMachine.State = AI_StateMachine.state.Respond;
             stats.attention += 100;
@@ -125,9 +150,17 @@ public class AI_Controller : MonoBehaviour {
         {
             stats.energy -= .02f;
             stats.attention -= .1f;
-            stats.amusement -= .1f;
             if (stateMachine.State != AI_StateMachine.state.Playing)
-                stats.happiness -= .1f;
+            {
+                stats.amusement -= .025f;
+                stats.happiness -= .05f;
+            }
+            else
+            {
+                stats.amusement += .05f;
+                stats.happiness += .1f;
+            }
+
         }
 
         //Min Stats Value

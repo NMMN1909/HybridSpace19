@@ -15,7 +15,6 @@ public class AI_Roaming : MonoBehaviour {
     private AI_Controller controller;
 
     private int movInputX;
-    private int movInputY;
     private int movInputZ;
     private int minMax;
     private int xOrz;
@@ -31,10 +30,7 @@ public class AI_Roaming : MonoBehaviour {
     public bool canRoam;
     private bool canRotate;
     public bool canMovForward;
-    private bool doStep;
-
-    //Animations
-    //public Animation anim_Bounce;
+    private bool changeRepeatDirection;
     
     // Use this for initialization
 	void Start () {
@@ -42,15 +38,23 @@ public class AI_Roaming : MonoBehaviour {
         controller = GetComponent<AI_Controller>();
         stats.movDirection = Vector3.zero;
         idle = GetComponent<AI_Idle>();
-        hitDistance = 4.5f;
+        hitDistance = 3f;
         canRoam = true;
-        doStep = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //transform.Translate(movDirection * Time.deltaTime, Space.World)
-        Debug.DrawRay(this.transform.position + this.GetComponent<CapsuleCollider>().center, stats.movDirection * (hitDistance/4), Color.yellow);
+        //transform.Translate(movDirection * Time.deltaTime, Space.World);
+
+        DirectionBlocked();
+        Debug.DrawRay((this.transform.position+new Vector3(0,.3f,0)) + this.GetComponent<CapsuleCollider>().center, stats.movDirection * hitDistance, Color.yellow);
+        //Rotate To New Direction
+        if (canRotate)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(stats.movDirection), .05f);
+
+        //Move Forward
+        if (canMovForward)
+            transform.Translate(Vector3.forward * stats.movSpeed * Time.deltaTime);
     }
 
     public void Roaming()
@@ -61,17 +65,6 @@ public class AI_Roaming : MonoBehaviour {
             StartCoroutine(WalkCycle());
             canRoam = false;
         }
-        //Rotate
-        //New Direction
-        if(canRotate)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(stats.movDirection), .05f);
-
-        //Move Forward
-        if (canMovForward)
-        {
-            transform.Translate(Vector3.forward * stats.movSpeed * Time.deltaTime);
-            //anim_Bounce.Play("Creature_Bounce");
-        }
     }
 
     IEnumerator WalkCycle()
@@ -80,52 +73,24 @@ public class AI_Roaming : MonoBehaviour {
         canMovForward = false;
 
         //Repeat WalkCycle - Chance = 50% 
-        repeatWalkCycle = Random.Range(0, 2);
-        if(repeatWalkCycle == 0)
-            canChangeDirection = true;
+        repeatWalkCycle = Mathf.RoundToInt(Random.Range(0, 2));
         if (repeatWalkCycle == 1)
+            canChangeDirection = true;
+        if (repeatWalkCycle == 0)
             canChangeDirection = false;
+
+        if (canChangeDirection || hit.collider != null || changeRepeatDirection)
+            NewDirection();
 
         if (repeatWalkCycle == 0)
         {
-            if (canChangeDirection)
-            {
-                movInputX = Random.Range(-1, 2);
-                movInputZ = Random.Range(-1, 2);
-
-                if (movInputX == 0 && movInputZ == 0)
-                {
-                    xOrz = Random.Range(0, 2);
-                    minMax = Random.Range(0, 2);
-
-                    if (xOrz == 0)
-                        if (minMax == 0)
-                            movInputX = -1;
-                    if (minMax == 1)
-                        movInputX = 1;
-                    if (xOrz == 1)
-                        if (minMax == 0)
-                            movInputZ = -1;
-                    if (minMax == 1)
-                        movInputZ = 1;
-                }
-                movSideways = transform.right * movInputX * Time.deltaTime;
-                movForward = transform.forward * movInputZ * Time.deltaTime;
-
-                //Vector3 movDirection
-                stats.movDirection = ((movForward + movSideways).normalized * stats.movSpeed);
-
-                canChangeDirection = false;
-            }
             canMovForward = false;
             canRotate = true;
             randomRotDuration = Random.Range(0, 2);
-            DirectionBlocked();
             yield return new WaitForSeconds(randomRotDuration);
             canRotate = false;
             yield return new WaitForSeconds(0);
             canMovForward = true;
-
             yield return new WaitForSeconds(stats.walkDuration);
             canMovForward = false;
             controller.canNewState = true;
@@ -134,68 +99,58 @@ public class AI_Roaming : MonoBehaviour {
         }
         else
         {
-            if (canChangeDirection)
-            {
-                movInputX = Random.Range(-1, 2);
-                movInputZ = Random.Range(-1, 2);
-
-                if (movInputX == 0 && movInputZ == 0)
-                {
-                    xOrz = Random.Range(0, 2);
-                    minMax = Random.Range(0, 2);
-
-                    if (xOrz == 0)
-                        if (minMax == 0)
-                            movInputX = -1;
-                    if (minMax == 1)
-                        movInputX = 1;
-                    if (xOrz == 1)
-                        if (minMax == 0)
-                            movInputZ = -1;
-                    if (minMax == 1)
-                        movInputZ = 1;
-                }
-                movSideways = transform.right * movInputX * Time.deltaTime;
-                movForward = transform.forward * movInputZ * Time.deltaTime;
-
-                //Vector3 movDirection
-                stats.movDirection = ((movForward + movSideways).normalized * stats.movSpeed);
-
-                canChangeDirection = false;
-            }
-
-            DirectionBlocked();
             //Move Forward DUration
             canRotate = true;
             yield return new WaitForSeconds(1);
             canMovForward = true;
-
             yield return new WaitForSeconds(stats.walkDuration);
-
             canMovForward = false;
             canRotate = false;
             canRoam = true;
         }      
     }
 
-    //Reverses movDirection
+    //Change movDirection
     public void DirectionBlocked()
     {
         //Check If movDirection Vector Collides
-        if (Physics.Raycast(this.transform.position + this.GetComponent<CapsuleCollider>().center, stats.movDirection, out hit, hitDistance))
+        if (Physics.Raycast((this.transform.position + new Vector3(0, .3f, 0)) + this.GetComponent<CapsuleCollider>().center, stats.movDirection, out hit, hitDistance))
         {
-            Vector3 lookPos = interactionManager.transform.position - transform.position;
-            lookPos.y = 0;
-            //stats.movDirection = lookPos;
-            stats.movDirection = -stats.movDirection;
+            NewDirection();
+            if (hit.collider != null)
+                changeRepeatDirection = true;
+            else
+                canChangeDirection = false;
         }
     }
 
-    IEnumerator WalkAnimationCycle()
+    private void NewDirection()
     {
-        yield return new WaitForSeconds(.5f);
+        movInputX = Random.Range(-1, 2);
+        movInputZ = Random.Range(-1, 2);
 
-        yield return new WaitForSeconds(.5f);
-        doStep = true;
+        if (movInputX == 0 && movInputZ == 0)
+        {
+            xOrz = Random.Range(0, 2);
+            minMax = Random.Range(0, 2);
+
+            if (xOrz == 0)
+                if (minMax == 0)
+                    movInputX = -1;
+            if (minMax == 1)
+                movInputX = 1;
+            if (xOrz == 1)
+                if (minMax == 0)
+                    movInputZ = -1;
+            if (minMax == 1)
+                movInputZ = 1;
+        }
+        movSideways = transform.right * movInputX * Time.deltaTime;
+        movForward = transform.forward * movInputZ * Time.deltaTime;
+
+        //Vector3 movDirection
+        stats.movDirection = ((movForward + movSideways).normalized);
+
+        canChangeDirection = false;
     }
 }

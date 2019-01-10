@@ -40,7 +40,7 @@ public class Script_Arduino : MonoBehaviour
 
 	void Update()
 	{
-        if (player.GetComponent<AI_StateMachine>().State == AI_StateMachine.state.Interact)
+        if (stateMachine.State == AI_StateMachine.state.Interact)
         {
             if (!isInteracting)
             {

@@ -19,6 +19,7 @@ public class AI_StateMachine : MonoBehaviour {
     private AI_Interact interact;
     private AI_Upset upset;
     private AI_WindowSlam windowSlam;
+    private AI_Playing playing;
 
     // Initialize the public variables
     public state State;
@@ -114,6 +115,14 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Senses();
                 controller.Cells();
                 break;
+
+            // The playing playerState
+            case state.Playing:
+                controller.Brain();
+                controller.Senses();
+                controller.Cells();
+
+                break;
         }
     }
 
@@ -129,5 +138,6 @@ public class AI_StateMachine : MonoBehaviour {
         interact = GetComponent<AI_Interact>();
         upset = GetComponent<AI_Upset>();
         windowSlam = GetComponent<AI_WindowSlam>();
+        playing = GetComponent<AI_Playing>();
     }
 }

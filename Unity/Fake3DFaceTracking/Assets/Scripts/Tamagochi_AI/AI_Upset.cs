@@ -76,8 +76,6 @@ public class AI_Upset : MonoBehaviour {
             StopAllCoroutines();
             StartCoroutine(UpsetCycle());
             canUpset = false;
-            Debug.Log(windowRandom);
-            Debug.Log(canUpset);
         }
     }
 
