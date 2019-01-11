@@ -50,6 +50,7 @@ public class AI_Notice : MonoBehaviour {
             controller.stopAllCoroutines = false;
             StartCoroutine(NoticeCycle());
             stats.attention += Random.Range(15,25);
+            stats.attention += Random.Range(10,20);
             canNotice = false;
         }
     }
