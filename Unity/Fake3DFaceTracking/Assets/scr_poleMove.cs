@@ -12,12 +12,6 @@ public class scr_poleMove : MonoBehaviour
 
     // Initialize the private variables
     float moveAlarm;
-
-	// Use this for initialization
-	void Start ()
-    {
-		
-	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -34,7 +28,7 @@ public class scr_poleMove : MonoBehaviour
             moveAlarm = moveAlarmDuration;
         }
 
-        if (moveAlarm > 0f && playerStats.State != AI_StateMachine.state.Sleep && playerStats.State != AI_StateMachine.state.Wake && playerStats.State != AI_StateMachine.state.Float)
+        if (moveAlarm > 0f && playerStats.State != AI_StateMachine.state.Sleep && playerStats.State != AI_StateMachine.state.Wake && playerStats.State != AI_StateMachine.state.Float && stats.energy > stats.energyToTired)
             playerStats.State = AI_StateMachine.state.Playing;
         else
         {

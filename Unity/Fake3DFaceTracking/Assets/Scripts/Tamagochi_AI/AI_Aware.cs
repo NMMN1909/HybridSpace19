@@ -65,6 +65,7 @@ public class AI_Aware : MonoBehaviour {
         {
             isAware = true;
             stats.attention += Random.Range(0, 25);
+            stats.amusement += Random.Range(0, 10);
             yield return new WaitForSeconds(stats.awareDuration);
         }
         isAware = false;

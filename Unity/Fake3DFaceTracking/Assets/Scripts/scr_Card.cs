@@ -9,6 +9,7 @@ public class scr_Card : MonoBehaviour {
     public GameObject card;
     public Animation animCardGive;
     public AudioSource audioSource;
+    public AI_StateMachine stateMachine;
 
     public float animDuration;
     public bool isGiven;
@@ -41,7 +42,6 @@ public class scr_Card : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (cardInserted && !isGiven && canGive)
         {
             canGive = false;
@@ -68,6 +68,8 @@ public class scr_Card : MonoBehaviour {
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(animDuration);
+        if (isGiven)
+            stateMachine.State = AI_StateMachine.state.Notice;
         canGive = true;
     }
 
