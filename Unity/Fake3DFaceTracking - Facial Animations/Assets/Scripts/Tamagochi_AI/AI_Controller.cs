@@ -12,6 +12,8 @@ public class AI_Controller : MonoBehaviour {
     private AI_Aware aware;
     private AI_Sleep sleep;
     private AI_EmotionState emotionStateMachine;
+    public scr_Card card;
+    public Script_Arduino arduino;
 
     private int idleFailRate;
     public bool canNewState;
@@ -69,15 +71,14 @@ public class AI_Controller : MonoBehaviour {
             upsetCounter -= 1;
 
         if (stats.energy >= 70f)
-        {
             stats.idleSuccessRate = 10;
-        }
         else if (stats.energy >= 40f && stats.energy < 70f)
-        {
             stats.idleSuccessRate = 20;
-        }
 
-        if (stats.energy <= 0 && stats.isAwake)
+        if (stats.energy <= 0)
+            roaming.canRoam = false;
+
+        if (stats.energy <= 0 && stats.isAwake && arduino.pointLights.activeSelf == false)
         {
             stateMachine.State = AI_StateMachine.state.Sleep;
             stats.isAwake = false;
@@ -105,7 +106,6 @@ public class AI_Controller : MonoBehaviour {
             stateMachine.State = AI_StateMachine.state.Respond;
             canNewState = false;
         }
-
 
         if ((stateMachine.State == AI_StateMachine.state.Roaming || stateMachine.State == AI_StateMachine.state.Default) && stateMachine.State != AI_StateMachine.state.Sleep)
         {
@@ -159,18 +159,26 @@ public class AI_Controller : MonoBehaviour {
     {
         if (stats.isAwake)
         {
-            stats.energy -= .02f;
-            stats.attention -= .12f;
-            if (stateMachine.State != AI_StateMachine.state.Playing)
+            if(stateMachine.State == AI_StateMachine.state.Interact || stateMachine.State == AI_StateMachine.state.Respond)
             {
-                stats.amusement -= .025f;
-                stats.happiness -= .05f;
+                stats.amusement -= 0f;
+                stats.happiness -= 0f;
+                stats.attention -= .05f;
+                stats.energy -= .02f;
             }
-            else
+            else if (stateMachine.State == AI_StateMachine.state.Playing)
             {
                 stats.amusement += .05f;
                 stats.happiness += .1f;
                 stats.attention += .05f;
+                stats.energy -= .03f;
+            }
+            else
+            {
+                stats.amusement -= .025f;
+                stats.happiness -= .05f;
+                stats.attention -= .05f; 
+                stats.energy -= .02f;
             }
         }
 
@@ -197,7 +205,7 @@ public class AI_Controller : MonoBehaviour {
 
     public void Face()
     {
-        //Facial Expression Conditions
+        //-----------------[ Facial Expression Conditions ]--------------------
 
         //Asleep
         if (!stats.isAwake)
@@ -249,12 +257,6 @@ public class AI_Controller : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.V))
             stats.attention += 10f;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            stats.attention += Random.Range(20, 35);
-            aware.Aware();
-        }
-
         if (Input.GetKeyDown(KeyCode.A))
             stateMachine.State = AI_StateMachine.state.Default;
 
@@ -272,6 +274,28 @@ public class AI_Controller : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q))
             stopAllCoroutines = true;
+
+        //Interact With Tamagochi
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            stats.attention += Random.Range(20, 35);
+            aware.Aware();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (!card.isGiven)
+                card.cardInserted = true;
+            else
+                card.cardInserted = false;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (arduino.pointLights.activeSelf)
+                arduino.pointLights.SetActive(false);
+            else
+                arduino.pointLights.SetActive(true);
+        }
+
     }
 
     public IEnumerator NewState()

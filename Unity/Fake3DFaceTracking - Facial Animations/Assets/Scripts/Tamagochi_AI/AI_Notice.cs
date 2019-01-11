@@ -8,6 +8,7 @@ public class AI_Notice : MonoBehaviour {
     private AI_Variables stats;
     private AI_Controller controller;
     private AI_StateMachine stateMachine;
+    public scr_Card card;
     public Transform head;
 
     public bool canNotice;
@@ -48,7 +49,7 @@ public class AI_Notice : MonoBehaviour {
         {
             controller.stopAllCoroutines = false;
             StartCoroutine(NoticeCycle());
-            stats.attention += Random.Range(10,20);
+            stats.attention += Random.Range(15,25);
             canNotice = false;
         }
     }
@@ -58,8 +59,14 @@ public class AI_Notice : MonoBehaviour {
         //Notice, look at player
         isNotice = true;
         yield return new WaitForSeconds(stats.noticeDuration);
-        StartCoroutine(controller.NewState());
-
+        if (card.isGiven)
+        {
+            Debug.Log("Thoes sdapjd");
+            stateMachine.State = AI_StateMachine.state.Respond;
+            stats.attention += 50;
+        }
+        else
+            StartCoroutine(controller.NewState());
     }
 
     private IEnumerator StopCoroutines()

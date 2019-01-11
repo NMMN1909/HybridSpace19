@@ -20,12 +20,6 @@ public class scr_ball : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
     void OnCollisionEnter(Collision collision)
     {
         if (stateMachine.State == AI_StateMachine.state.Playing)

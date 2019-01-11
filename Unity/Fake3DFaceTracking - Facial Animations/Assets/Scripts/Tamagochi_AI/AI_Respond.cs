@@ -13,6 +13,7 @@ public class AI_Respond : MonoBehaviour {
     public Transform head;
     public Transform tamagochiHead;
     public Transform interactionManager;
+    public scr_Card card;
 
     public bool canRespond;
     public bool isRespond;
