@@ -49,6 +49,7 @@ public class AI_Notice : MonoBehaviour {
         {
             controller.stopAllCoroutines = false;
             StartCoroutine(NoticeCycle());
+            stats.attention += Random.Range(15,25);
             stats.attention += Random.Range(10,20);
             canNotice = false;
         }
@@ -61,6 +62,7 @@ public class AI_Notice : MonoBehaviour {
         yield return new WaitForSeconds(stats.noticeDuration);
         if (card.isGiven)
         {
+            Debug.Log("Thoes sdapjd");
             stateMachine.State = AI_StateMachine.state.Respond;
             stats.attention += 50;
         }
