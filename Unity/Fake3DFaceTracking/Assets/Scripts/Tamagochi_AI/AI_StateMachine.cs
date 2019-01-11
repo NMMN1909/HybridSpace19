@@ -35,6 +35,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 idle.Idle();
                 break;
 
@@ -43,6 +44,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 roaming.Roaming();
                 break;
 
@@ -51,6 +53,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 notice.Notice();
                 break;
 
@@ -59,6 +62,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 respond.Respond();
                 break;
 
@@ -67,6 +71,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 wake.Wake();
                 break;
 
@@ -75,6 +80,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 sleep.Sleep();
                 break;
 
@@ -83,6 +89,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 interact.Interact();
                 break;
 
@@ -91,6 +98,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 upset.Upset();
                 break;
 
@@ -99,6 +107,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 windowSlam.WindowSlam();
                 break;
 
@@ -107,6 +116,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 break;
 
             // The upset playerState
@@ -114,6 +124,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
+                controller.Face();
                 break;
 
             // The playing playerState
@@ -121,7 +132,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
-
+                controller.Face();
                 break;
         }
     }

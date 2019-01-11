@@ -39,6 +39,12 @@ public class AI_WindowSlam : MonoBehaviour {
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * 2f);
             aware.isAware = true;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StopAllCoroutines();
+                stateMachine.State = AI_StateMachine.state.Notice;
+            }
         }
 	}
 

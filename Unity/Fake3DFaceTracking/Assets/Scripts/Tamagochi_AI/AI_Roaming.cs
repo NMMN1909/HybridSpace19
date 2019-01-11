@@ -7,46 +7,57 @@ public class AI_Roaming : MonoBehaviour {
     //Reference
     public Transform interactionManager;
     private Vector3 physicsCentre;
-    private RaycastHit hit;
+    public RaycastHit hit;
     private float hitDistance;
 
     private AI_Variables stats;
     private AI_Idle idle;
     private AI_Controller controller;
+    private AI_StateMachine stateMachine;
 
-    private int movInputX;
-    private int movInputZ;
+    private float movInputX;
+    private float movInputZ;
     private int minMax;
     private int xOrz;
     private int repeatWalkCycle;
-    private int randomRotDuration;
+    private float randomRotDuration;
 
     public float directionTimer;
 
     public Vector3 movForward;
     public Vector3 movSideways;
 
-    private bool canChangeDirection;
+    public bool canChangeDirection;
     public bool canRoam;
     private bool canRotate;
     public bool canMovForward;
-    private bool changeRepeatDirection;
+    public bool changeMovCheckDirection;
     
     // Use this for initialization
 	void Start () {
         stats = GetComponent<AI_Variables>();
         controller = GetComponent<AI_Controller>();
-        stats.movDirection = Vector3.zero;
+        stateMachine = GetComponent<AI_StateMachine>();
         idle = GetComponent<AI_Idle>();
         hitDistance = 3f;
         canRoam = true;
-	}
+        NewDirection();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         //transform.Translate(movDirection * Time.deltaTime, Space.World);
+        if (controller.stopAllCoroutines)
+            StartCoroutine(StopCoroutines());
 
-        DirectionBlocked();
+        if(stateMachine.State != AI_StateMachine.state.Roaming)
+        {
+            canMovForward = false;
+            canRoam = true;
+            canRotate = false;
+            canRotate = false;
+            StopAllCoroutines();
+        }
         Debug.DrawRay((this.transform.position+new Vector3(0,.3f,0)) + this.GetComponent<CapsuleCollider>().center, stats.movDirection * hitDistance, Color.yellow);
         //Rotate To New Direction
         if (canRotate)
@@ -61,9 +72,14 @@ public class AI_Roaming : MonoBehaviour {
     {
         if (canRoam)
         {
-            StopAllCoroutines();
-            StartCoroutine(WalkCycle());
-            canRoam = false;
+            MoveRayCastCheck();
+            if (changeMovCheckDirection)
+                NewDirection();             
+            else
+            {
+                StartCoroutine(WalkCycle());
+                canRoam = false;
+            }
         }
     }
 
@@ -72,56 +88,46 @@ public class AI_Roaming : MonoBehaviour {
         canRotate = false;
         canMovForward = false;
 
-        //Repeat WalkCycle - Chance = 50% 
-        repeatWalkCycle = Mathf.RoundToInt(Random.Range(0, 2));
-        if (repeatWalkCycle == 1)
-            canChangeDirection = true;
-        if (repeatWalkCycle == 0)
-            canChangeDirection = false;
+            repeatWalkCycle = Mathf.RoundToInt(Random.Range(0, 8));
+            if (repeatWalkCycle > 5)
+                canChangeDirection = true;
+            if (repeatWalkCycle == 0)
+                canChangeDirection = false;
 
-        if (canChangeDirection || hit.collider != null || changeRepeatDirection)
-            NewDirection();
-
+        canRotate = true;
         if (repeatWalkCycle == 0)
         {
-            canMovForward = false;
-            canRotate = true;
-            randomRotDuration = Random.Range(0, 2);
+            randomRotDuration = Random.Range(1, 2);
             yield return new WaitForSeconds(randomRotDuration);
-            canRotate = false;
-            yield return new WaitForSeconds(0);
             canMovForward = true;
             yield return new WaitForSeconds(stats.walkDuration);
             canMovForward = false;
-            controller.canNewState = true;
-            yield return new WaitForSeconds(.1f);
-            canRoam = true;
+            NewDirection();
+            StartCoroutine(controller.NewState());
         }
         else
         {
-            //Move Forward DUration
-            canRotate = true;
-            yield return new WaitForSeconds(1);
+            randomRotDuration = Random.Range(0f, 1f);
+            yield return new WaitForSeconds(randomRotDuration);
             canMovForward = true;
             yield return new WaitForSeconds(stats.walkDuration);
             canMovForward = false;
             canRotate = false;
+            yield return new WaitForSeconds(Random.Range(0f, .2f));
             canRoam = true;
-        }      
+            if(canChangeDirection)
+                NewDirection();
+        }
     }
 
     //Change movDirection
-    public void DirectionBlocked()
+    public void MoveRayCastCheck()
     {
         //Check If movDirection Vector Collides
         if (Physics.Raycast((this.transform.position + new Vector3(0, .3f, 0)) + this.GetComponent<CapsuleCollider>().center, stats.movDirection, out hit, hitDistance))
-        {
-            NewDirection();
-            if (hit.collider != null)
-                changeRepeatDirection = true;
-            else
-                canChangeDirection = false;
-        }
+            changeMovCheckDirection = true;
+        else
+            changeMovCheckDirection = false;
     }
 
     private void NewDirection()
@@ -135,22 +141,33 @@ public class AI_Roaming : MonoBehaviour {
             minMax = Random.Range(0, 2);
 
             if (xOrz == 0)
+            {
                 if (minMax == 0)
                     movInputX = -1;
-            if (minMax == 1)
-                movInputX = 1;
+                if (minMax == 1)
+                    movInputX = 1;
+            }
+
             if (xOrz == 1)
+            {
                 if (minMax == 0)
                     movInputZ = -1;
-            if (minMax == 1)
-                movInputZ = 1;
+                if (minMax == 1)
+                    movInputZ = 1;
+            }
         }
-        movSideways = transform.right * movInputX * Time.deltaTime;
-        movForward = transform.forward * movInputZ * Time.deltaTime;
+        movSideways = transform.right * movInputX;
+        movForward = transform.forward * movInputZ;
 
         //Vector3 movDirection
         stats.movDirection = ((movForward + movSideways).normalized);
+    }
 
-        canChangeDirection = false;
+    private IEnumerator StopCoroutines()
+    {
+        StartCoroutine(controller.NewState());
+        controller.stopAllCoroutines = false;
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
     }
 }

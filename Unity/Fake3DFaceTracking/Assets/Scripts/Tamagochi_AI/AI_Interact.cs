@@ -15,7 +15,7 @@ public class AI_Interact : MonoBehaviour {
     public Transform head;
 
     public bool isInteract;
-    private bool canInteract;
+    public bool canInteract;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +29,16 @@ public class AI_Interact : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (controller.stopAllCoroutines)
+            StartCoroutine(StopCoroutines());
+
+        if (stateMachine.State != AI_StateMachine.state.Interact)
+        {
+            canInteract = true;
+            isInteract = false;
+            StopAllCoroutines();
+        }
+
         if (isInteract && stats.attention > stats.attentionToInteract && stateMachine.State == AI_StateMachine.state.Interact)
         {
             Vector3 lookPos = head.transform.position - transform.position;
@@ -38,9 +48,7 @@ public class AI_Interact : MonoBehaviour {
             aware.isAware = true;
         }
         else if (isInteract && stats.attention < 40 && stateMachine.State == AI_StateMachine.state.Interact)
-        {
             StartCoroutine(StateDelay());
-        }
         else if (!isInteract && stateMachine.State != AI_StateMachine.state.Interact && !aware.isAware && stateMachine.State != AI_StateMachine.state.Respond)
             tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(this.transform.forward), .5f);
     }
@@ -49,7 +57,6 @@ public class AI_Interact : MonoBehaviour {
     {
         if (canInteract)
         {
-            StopAllCoroutines();
             StartCoroutine(InteractCycle());
             stats.attention = Random.Range(70, 100);
             canInteract = false;
@@ -66,9 +73,16 @@ public class AI_Interact : MonoBehaviour {
     {
         stateMachine.State = AI_StateMachine.state.Notice;
         controller.canNewState = true;
-        yield return new WaitForSeconds(.1f);
         aware.isAware = false;
-        isInteract = false;
-        canInteract = true;
+        yield return new WaitForSeconds(.1f);
+        StopAllCoroutines();
+    }
+
+    private IEnumerator StopCoroutines()
+    {
+        StartCoroutine(controller.NewState());
+        controller.stopAllCoroutines = false;
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
     }
 }

@@ -22,7 +22,6 @@ public class AI_Wake : MonoBehaviour {
     {
         if (canWake)
         {
-            StopAllCoroutines();
             StartCoroutine(WakeCycle());
             canWake = false;
         }
@@ -30,8 +29,10 @@ public class AI_Wake : MonoBehaviour {
 
     IEnumerator WakeCycle()
     {
+        stats.happiness += 40;
+        stats.amusement += 40;
         yield return new WaitForSeconds(2f);
-        stateMachine.State = AI_StateMachine.state.Default;
+        stateMachine.State = AI_StateMachine.state.Notice;
         controller.canNewState = true;
         yield return new WaitForSeconds(.1f);
         stats.isAwake = true;

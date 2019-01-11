@@ -10,8 +10,8 @@ public class AI_Notice : MonoBehaviour {
     private AI_StateMachine stateMachine;
     public Transform head;
 
-    private bool canNotice;
-    private bool isNotice;
+    public bool canNotice;
+    public bool isNotice;
 
 	// Use this for initialization
 	void Start () {
@@ -30,35 +30,47 @@ public class AI_Notice : MonoBehaviour {
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime *2f);
         }
+
+        if (controller.stopAllCoroutines)
+            StartCoroutine(StopCoroutines());
+        
+        if(stateMachine.State != AI_StateMachine.state.Notice)
+        {
+            canNotice = true;
+            isNotice = false;
+            StopAllCoroutines();
+        }
 	}
 
     public void Notice()
     {
         if (canNotice)
         {
-            StopAllCoroutines();
+            controller.stopAllCoroutines = false;
             StartCoroutine(NoticeCycle());
             stats.attention += Random.Range(10,20);
             canNotice = false;
         }
     }
 
-    public void AwareNoticeCheck()
-    {
-        //if(stats.attention)
-    }
-
-    IEnumerator NoticeCycle()
+    public IEnumerator NoticeCycle()
     {
         //Notice, look at player
-        stats.movDirection = Vector3.zero;
         isNotice = true;
-        //Play Notice Animation
         yield return new WaitForSeconds(stats.noticeDuration);
-        stateMachine.State = AI_StateMachine.state.Default;
-        controller.canNewState = true;
-        yield return new WaitForSeconds(.1f);
-        canNotice = true;
-        isNotice = false;
+        StartCoroutine(controller.NewState());
+
     }
+
+    private IEnumerator StopCoroutines()
+    {
+        StartCoroutine(controller.NewState());
+        controller.stopAllCoroutines = false;
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
+    }
+
+
+
+
 }

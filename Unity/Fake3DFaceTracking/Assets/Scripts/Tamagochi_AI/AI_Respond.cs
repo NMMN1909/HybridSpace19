@@ -14,8 +14,8 @@ public class AI_Respond : MonoBehaviour {
     public Transform tamagochiHead;
     public Transform interactionManager;
 
-    private bool canRespond;
-    private bool isRespond;
+    public bool canRespond;
+    public bool isRespond;
 
     //Animations
     //public Animation anim_Bounce;
@@ -32,7 +32,17 @@ public class AI_Respond : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        if (controller.stopAllCoroutines)
+            StartCoroutine(StopCoroutines());
+
+        if (stateMachine.State != AI_StateMachine.state.Respond)
+        {
+            canRespond = true;
+            isRespond = false;
+            StopAllCoroutines();
+        }
+
         if (isRespond && stats.attention >= 40 && stateMachine.State == AI_StateMachine.state.Respond)
         {
             //anim_Bounce.Play("Creature_Bounce");
@@ -45,9 +55,7 @@ public class AI_Respond : MonoBehaviour {
             aware.isAware = true;
         }
         else if(isRespond && stats.attention < 40 && stateMachine.State == AI_StateMachine.state.Respond)
-        {
             StartCoroutine(StateDelay());
-        }
         else if(!isRespond && stateMachine.State != AI_StateMachine.state.Respond && !aware.isAware && !interact.isInteract)
             tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(this.transform.forward), .5f);
 
@@ -60,7 +68,6 @@ public class AI_Respond : MonoBehaviour {
     {
         if (canRespond)
         {
-            StopAllCoroutines();
             StartCoroutine(RespondCycle());
             stats.attention += Random.Range(10, 30);
             canRespond = false;
@@ -75,11 +82,19 @@ public class AI_Respond : MonoBehaviour {
 
     IEnumerator StateDelay()
     {
-        stateMachine.State = AI_StateMachine.state.Default;
-        controller.canNewState = true;
-        yield return new WaitForSeconds(.1f);
+        StartCoroutine(controller.NewState());
         aware.isAware = false;
         isRespond = false;
         canRespond = true;
+        yield return new WaitForSeconds(.1f);
+        StopAllCoroutines();
+    }
+
+    private IEnumerator StopCoroutines()
+    {
+        StartCoroutine(controller.NewState());
+        controller.stopAllCoroutines = false;
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
     }
 }

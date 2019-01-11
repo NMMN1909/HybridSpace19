@@ -16,20 +16,16 @@ public class AI_Playing : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
         controller = GetComponent<AI_Controller>();
         stateMachine = GetComponent<AI_StateMachine>();
         stats = GetComponent<AI_Variables>();
         isPlaying = true;
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (stateMachine.State == AI_StateMachine.state.Playing)
+            if (stateMachine.State == AI_StateMachine.state.Playing)
         {
-            StopAllCoroutines();
             if ((transform.position - toy.position).magnitude > EPSILON)
             {
                 //move towards the toy (target)
@@ -46,6 +42,4 @@ public class AI_Playing : MonoBehaviour {
     {
         isPlaying = true;
     } 
-
-
 }

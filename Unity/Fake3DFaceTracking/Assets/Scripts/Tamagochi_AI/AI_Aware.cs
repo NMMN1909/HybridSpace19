@@ -64,7 +64,7 @@ public class AI_Aware : MonoBehaviour {
         if(angle < 85f)
         {
             isAware = true;
-            stats.attention += Random.Range(0, 15);
+            stats.attention += Random.Range(0, 25);
             yield return new WaitForSeconds(stats.awareDuration);
         }
         isAware = false;

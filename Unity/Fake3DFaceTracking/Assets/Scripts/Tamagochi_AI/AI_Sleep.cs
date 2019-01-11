@@ -36,7 +36,6 @@ public class AI_Sleep : MonoBehaviour {
     {
         if (!stats.isAwake)
         {
-            StopAllCoroutines();
             stats.energy += .1f;
         }
 

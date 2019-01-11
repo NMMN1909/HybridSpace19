@@ -15,8 +15,8 @@ public class AI_Upset : MonoBehaviour {
     public Transform windowPos2;
     private int windowRandom;
 
-    private bool isUpset;
-    private bool canUpset;
+    public bool isUpset;
+    public bool canUpset;
 
     //Animations
     //public Animation anim_Bounce;
@@ -33,6 +33,16 @@ public class AI_Upset : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (controller.stopAllCoroutines)
+            StartCoroutine(StopCoroutines());
+
+        if(stateMachine.State != AI_StateMachine.state.Upset)
+        {
+            canUpset = true;
+            isUpset = false;
+            StopAllCoroutines();
+        }
 
         if (isUpset)
         {
@@ -73,7 +83,6 @@ public class AI_Upset : MonoBehaviour {
         if (canUpset)
         {
             windowRandom = Random.Range(0, 2);
-            StopAllCoroutines();
             StartCoroutine(UpsetCycle());
             canUpset = false;
         }
@@ -83,5 +92,13 @@ public class AI_Upset : MonoBehaviour {
     {
         isUpset = true;
         yield return new WaitForSeconds(0);
+    }
+
+    private IEnumerator StopCoroutines()
+    {
+        StartCoroutine(controller.NewState());
+        controller.stopAllCoroutines = false;
+        yield return new WaitForSeconds(.01f);
+        StopAllCoroutines();
     }
 }
