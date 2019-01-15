@@ -27,11 +27,15 @@ public class AI_Roaming : MonoBehaviour {
     public Vector3 movForward;
     public Vector3 movSideways;
 
+    public AudioSource audioSourceJump;
+    public AudioSource audioSourceLand;
+
     private bool canChangeDirection;
     public bool canRoam;
     private bool canRotate;
     public bool canMovForward;
     private bool doStep;
+    private bool playAudio;
 
     //Animations
     //public Animation anim_Bounce;
@@ -71,7 +75,24 @@ public class AI_Roaming : MonoBehaviour {
         {
             transform.Translate(Vector3.forward * stats.movSpeed * Time.deltaTime);
             //anim_Bounce.Play("Creature_Bounce");
+
+            if (playAudio)
+            {
+                StartCoroutine(AudioCycle());
+                playAudio = false;
+            }
         }
+        else
+            playAudio = true;
+    }
+
+    IEnumerator AudioCycle()
+    {
+        yield return new WaitForSeconds(.25f);
+        audioSourceJump.Play();
+
+        yield return new WaitForSeconds(.35f);
+        audioSourceLand.Play();
     }
 
     IEnumerator WalkCycle()

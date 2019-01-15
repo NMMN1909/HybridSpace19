@@ -6,7 +6,7 @@ public class scr_ball : MonoBehaviour
 {
     // Initialize the public variables
     public Transform playerTransform;
-    public scr_playerStats playerStats;
+    public AI_StateMachine playerStats;
     public float force;
     public AudioSource audioSource;
 
@@ -27,7 +27,7 @@ public class scr_ball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (playerStats.playerState == scr_playerStats.states.Playing)
+        if (playerStats.State == AI_StateMachine.state.Playing)
         {
             rigidBody.AddForce(playerTransform.forward * force);
 
