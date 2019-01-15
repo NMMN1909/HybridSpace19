@@ -176,7 +176,7 @@ public class AI_Controller : MonoBehaviour {
             else
             {
                 stats.amusement -= .025f;
-                stats.happiness -= .05f;
+                stats.happiness -= .025f;
                 stats.attention -= .05f; 
                 stats.energy -= .02f;
             }

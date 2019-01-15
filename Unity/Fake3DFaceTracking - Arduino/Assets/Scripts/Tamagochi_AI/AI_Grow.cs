@@ -20,17 +20,19 @@ public class AI_Grow : MonoBehaviour {
 
     public void Grow(float speed, float target)
     {
+        Debug.Log("Growing Function Entered");
         if (transform.localScale.x >= target && stats.isGrowing)
         {
-            stats.attention += 10f;
+            stats.attention += 5f;
             stats.isGrowing = false;
             stateMachine.State = AI_StateMachine.state.Roaming;
         }
 
-        if (transform.localScale.x <= .1478281f && !stats.isGrowing)
+        if (transform.localScale.x <= 12f && !stats.isGrowing)
         {
-            stats.attention += 10f;
+            stats.attention += 5f;
             stats.isGrowing = true;
+            Debug.Log("Growing is true");
             stateMachine.State = AI_StateMachine.state.Roaming;
         }
 

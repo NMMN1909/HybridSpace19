@@ -49,6 +49,5 @@ public class AI_Wake : MonoBehaviour {
             stats.isAwake = true;
             canWake = true;
         }
-
     }
 }

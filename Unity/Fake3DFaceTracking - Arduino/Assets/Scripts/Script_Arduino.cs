@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.IO.Ports;
 
@@ -13,6 +14,8 @@ public class Script_Arduino : MonoBehaviour
     public AI_Variables stats;
     public GameObject pointLights;
     public GameObject player;
+    public scr_poleMove poleMove;
+    public AI_Aware aware;
 
     SerialPort stream = new SerialPort("COM3", 9600);
 	int Timer;
@@ -91,8 +94,8 @@ public class Script_Arduino : MonoBehaviour
 
             // Tikken
             case 2:
-                if (stats.isAwake)
-                    stateMachine.State = AI_StateMachine.state.Respond;
+                stats.attention += UnityEngine.Random.Range(20, 35);
+                aware.Aware();
                 break;
 
             //
@@ -103,7 +106,11 @@ public class Script_Arduino : MonoBehaviour
             // Groene kaart
             case 9:
                 if (stateMachine.State == AI_StateMachine.state.Interact)
+                {
                     stateMachine.State = AI_StateMachine.state.Grow;
+                    Debug.Log("Card Insterted");
+                }
+
                 break;
 
             // Blauwe kaart
@@ -122,18 +129,28 @@ public class Script_Arduino : MonoBehaviour
 
             // Slider position
             case 13:
+                poleMove.moveAlarm = poleMove.moveAlarmDuration;
+                poleMove.targetID = 0;
                 break;
 
             case 14:
+                poleMove.moveAlarm = poleMove.moveAlarmDuration;
+                poleMove.targetID = 1;
                 break;
 
             case 15:
+                poleMove.moveAlarm = poleMove.moveAlarmDuration;
+                poleMove.targetID = 2;
                 break;
 
             case 16:
+                poleMove.moveAlarm = poleMove.moveAlarmDuration;
+                poleMove.targetID = 3;
                 break;
 
             case 17:
+                poleMove.moveAlarm = poleMove.moveAlarmDuration;
+                poleMove.targetID = 4;
                 break;
         }
 	}

@@ -69,7 +69,7 @@ public class scr_Card : MonoBehaviour {
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(animDuration);
-        if (isGiven && stateMachine.State != AI_StateMachine.state.Sleep && stateMachine.State != AI_StateMachine.state.Wake)
+        if (isGiven && stateMachine.State != AI_StateMachine.state.Sleep && stateMachine.State != AI_StateMachine.state.Wake && stateMachine.State != AI_StateMachine.state.Grow)
         {
             stateMachine.State = AI_StateMachine.state.Notice;
             stats.amusement += 10;

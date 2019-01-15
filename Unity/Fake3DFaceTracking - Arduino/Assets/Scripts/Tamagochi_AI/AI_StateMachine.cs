@@ -116,11 +116,11 @@ public class AI_StateMachine : MonoBehaviour {
 
             // The upset playerState
             case state.Grow:
-                controller.Brain();
                 controller.Senses();
-                controller.Cells();
+                //controller.Cells();
                 controller.Face();
-                grow.Grow(.0005f, .225f);
+                Debug.Log("Grow State");
+                grow.Grow(.05f, 18f); //
                 break;
 
             // The upset playerState
