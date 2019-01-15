@@ -221,7 +221,10 @@ public class AI_Controller : MonoBehaviour {
 
         //Asleep
         if (!stats.isAwake)
-            emotionStateMachine.emotion = AI_EmotionState.Emotion.Asleep;
+            if (sleep.disturbedBool)
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Tired;
+            else
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Asleep;
         else
         {
             //Tired
