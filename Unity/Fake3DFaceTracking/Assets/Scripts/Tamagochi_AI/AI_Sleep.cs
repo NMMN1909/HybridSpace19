@@ -9,37 +9,24 @@ public class AI_Sleep : MonoBehaviour {
     private AI_Controller controller;
     private AI_StateMachine stateMachine;
 
-	// Use this for initialization
-	void Start () {
+    public bool disturbedBool;
+
+    // Use this for initialization
+    void Start () {
         stats = GetComponent<AI_Variables>();
         controller = GetComponent<AI_Controller>();
         stateMachine = GetComponent<AI_StateMachine>();
-	}
-
-    private void Update()
-    {
-        //if tick on screen,
-        //- attention += x
-
-        //if attention == x.amount
-        //- wake
-        //= happiness -= x.amount
-
-        //if light is on
-        //- cant sleep
-
-        //if sleeping and light on
-        //- upset
+        disturbedBool = false;
     }
 
     public void Sleep()
     {
-        if (!stats.isAwake)
+        if (stats.attention > 80 && stateMachine.State == AI_StateMachine.state.Sleep)
         {
-            stats.energy += .1f;
+            stateMachine.State = AI_StateMachine.state.Wake;
+            disturbedBool = true;
         }
-
-        if (stats.energy > stats.energyToWake && !stats.isAwake)
+        else if (stats.energy > stats.energyToWake && !stats.isAwake)
         {
             stateMachine.State = AI_StateMachine.state.Wake;
         }

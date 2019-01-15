@@ -409,6 +409,77 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4567410277474152, guid: 281470a34b34f81498a2c3da33002b96,
     type: 2}
   m_PrefabInternal: {fileID: 53685195}
+--- !u!1001 &107493906
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 797881826}
+    m_Modifications:
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.021265505
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.0006567454
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.03676427
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.6917872
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.7215532
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.008315476
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.026877254
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.783
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.0066628414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.0066628405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175784692040180, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.8883786
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03a116ca1d8feb448924014e2f72d0b7, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!95 &107493907 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95908807159041700, guid: 03a116ca1d8feb448924014e2f72d0b7,
+    type: 2}
+  m_PrefabInternal: {fileID: 107493906}
 --- !u!1 &126834097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1527,7 @@ MonoBehaviour:
   animCardGive: {fileID: 340331040}
   audioSource: {fileID: 340331043}
   stateMachine: {fileID: 2084498122}
+  stats: {fileID: 2084498121}
   animDuration: 0
   isGiven: 0
   canGive: 0
@@ -2457,6 +2529,7 @@ MonoBehaviour:
   head: {fileID: 813384092}
   tamagochiHead: {fileID: 464799106}
   interactionManager: {fileID: 1472185869}
+  card: {fileID: 0}
   canRespond: 0
   isRespond: 0
 --- !u!114 &507420663
@@ -2521,6 +2594,8 @@ MonoBehaviour:
   idleSuccessRate: 134
   roamingSuccessRate: 0
   noticeSuccessRate: 0
+  isGrowing: 1
+  colorizeInit: 0
   energyToTired: 0
   happinessToHappy: 0
   happinessToSad: 0
@@ -2553,6 +2628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   card: {fileID: 0}
   arduino: {fileID: 0}
+  wake: {fileID: 0}
   canNewState: 0
   stopAllCoroutines: 0
   energySlider: {fileID: 300688519}
@@ -2570,6 +2646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cebdbd1389ad648bcccbb06efc1720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disturbedBool: 0
 --- !u!114 &507420669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7396,6 +7473,8 @@ MonoBehaviour:
   idleSuccessRate: 0
   roamingSuccessRate: 0
   noticeSuccessRate: 0
+  isGrowing: 1
+  colorizeInit: 0
   energyToTired: 0
   happinessToHappy: 0
   happinessToSad: 0
@@ -7428,6 +7507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   card: {fileID: 340331039}
   arduino: {fileID: 1472185868}
+  wake: {fileID: 0}
   canNewState: 0
   stopAllCoroutines: 0
   energySlider: {fileID: 300688519}
@@ -7464,6 +7544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfed5d39bb0fab84db3b0564b04e292c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  card: {fileID: 340331039}
 --- !u!136 &2084498126
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7518,6 +7599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cebdbd1389ad648bcccbb06efc1720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disturbedBool: 0
 --- !u!114 &2084498130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7532,6 +7614,7 @@ MonoBehaviour:
   head: {fileID: 813384092}
   tamagochiHead: {fileID: 797881826}
   interactionManager: {fileID: 1472185869}
+  card: {fileID: 0}
   canRespond: 0
   isRespond: 0
 --- !u!114 &2084498131
@@ -7643,6 +7726,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotion: 0
+  animator: {fileID: 107493907}
+  animationController:
+  - {fileID: 9100000, guid: 25157464f1d7c9744af307ba4684a05d, type: 2}
+  - {fileID: 9100000, guid: 2751f1482c53c60409cfe0d9d42dcec4, type: 2}
+  - {fileID: 9100000, guid: 0fb65951d7a6ff141a7935c53fb5b770, type: 2}
+  - {fileID: 9100000, guid: 868483cbb72dc0342b2601f59d4e64d8, type: 2}
+  - {fileID: 9100000, guid: 4a2056a2cc9d33c4ca2951382c3b24f1, type: 2}
+  - {fileID: 9100000, guid: 4a2056a2cc9d33c4ca2951382c3b24f1, type: 2}
+  - {fileID: 9100000, guid: 0de503705d8badc42aad9cfbbcfa3b54, type: 2}
+  - {fileID: 9100000, guid: a980cb7930685a541b46934a70ab130d, type: 2}
+--- !u!114 &2084498139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2084498118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0a670a3f220d245ac2762e3f65addd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2084498140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2084498118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aab9cba5bd25a24a9bb31e6e5b8bd1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creatureMaterials: []
+  playerMaterial: {fileID: 0}
 --- !u!1 &2107691689
 GameObject:
   m_ObjectHideFlags: 0

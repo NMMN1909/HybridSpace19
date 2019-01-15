@@ -14,6 +14,7 @@ public class AI_Controller : MonoBehaviour {
     private AI_EmotionState emotionStateMachine;
     public scr_Card card;
     public Script_Arduino arduino;
+    public AI_Wake wake;
 
     private int idleFailRate;
     public bool canNewState;
@@ -44,13 +45,14 @@ public class AI_Controller : MonoBehaviour {
         sleep = GetComponent<AI_Sleep>();
         stateMachine.State = AI_StateMachine.state.Default;
         emotionStateMachine = GetComponent<AI_EmotionState>();
+        wake = GetComponent<AI_Wake>();
         awareTimer = 200;
         respondCounter = 0;
 
         canNewState = true;
         canUpset = true;
         upsetCounter = 0;
-        upsetTimer = 3000;
+        upsetTimer = 3500;
         stopAllCoroutines = false;
     }
 	
@@ -101,7 +103,7 @@ public class AI_Controller : MonoBehaviour {
             canNewState = false;
         }
 
-        if (stats.attention > 70 && stateMachine.State != AI_StateMachine.state.Interact && stats.isAwake)
+        if (stats.attention > 80 && stateMachine.State != AI_StateMachine.state.Interact && stats.isAwake)
         {
             stateMachine.State = AI_StateMachine.state.Respond;
             canNewState = false;
@@ -132,8 +134,6 @@ public class AI_Controller : MonoBehaviour {
             canNewState = false;
         }
 
-
-
         //New State
         if (canNewState)
         {
@@ -161,15 +161,15 @@ public class AI_Controller : MonoBehaviour {
         {
             if(stateMachine.State == AI_StateMachine.state.Interact || stateMachine.State == AI_StateMachine.state.Respond)
             {
-                stats.amusement -= 0f;
-                stats.happiness -= 0f;
-                stats.attention -= .05f;
+                stats.amusement -= .025f;
+                stats.happiness -= .05f;
+                stats.attention -= .1f;
                 stats.energy -= .02f;
             }
             else if (stateMachine.State == AI_StateMachine.state.Playing)
             {
-                stats.amusement += .05f;
-                stats.happiness += .1f;
+                stats.amusement += .15f;
+                stats.happiness += .2f;
                 stats.attention += .05f;
                 stats.energy -= .03f;
             }
@@ -179,6 +179,18 @@ public class AI_Controller : MonoBehaviour {
                 stats.happiness -= .05f;
                 stats.attention -= .05f; 
                 stats.energy -= .02f;
+            }
+        }
+        else
+        {
+            if (sleep.disturbedBool)
+            {
+                stats.attention -= .1f;
+            }
+            else
+            {
+                stats.energy += .1f;
+                stats.attention -= .1f;
             }
         }
 
@@ -213,11 +225,11 @@ public class AI_Controller : MonoBehaviour {
         else
         {
             //Tired
-            if (stats.energy < stats.energyToTired)
+            if (stats.energy < stats.energyToTired || arduino.pointLights.activeSelf == false)
                 emotionStateMachine.emotion = AI_EmotionState.Emotion.Tired;
 
             //Wondering
-            else if (stateMachine.State == AI_StateMachine.state.Notice || aware.isAware)
+            else if (stateMachine.State == AI_StateMachine.state.Notice)
                 emotionStateMachine.emotion = AI_EmotionState.Emotion.Wondering;
 
 
@@ -303,5 +315,12 @@ public class AI_Controller : MonoBehaviour {
         stateMachine.State = AI_StateMachine.state.Default;
         yield return new WaitForSeconds(0.01f);
         canNewState = true;
+    }
+
+    public IEnumerator BadNight()
+    {
+        yield return new WaitForSeconds(1);
+        stats.energy = 15;
+        Debug.Log("askldasmdalkdmasdsad");
     }
 }

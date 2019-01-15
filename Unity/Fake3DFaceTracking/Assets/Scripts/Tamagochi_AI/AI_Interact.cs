@@ -71,7 +71,7 @@ public class AI_Interact : MonoBehaviour {
 
     IEnumerator StateDelay()
     {
-        stateMachine.State = AI_StateMachine.state.Notice;
+        stateMachine.State = AI_StateMachine.state.Roaming;
         controller.canNewState = true;
         aware.isAware = false;
         yield return new WaitForSeconds(.1f);

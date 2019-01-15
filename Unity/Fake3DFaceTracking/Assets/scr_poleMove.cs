@@ -28,7 +28,7 @@ public class scr_poleMove : MonoBehaviour
             moveAlarm = moveAlarmDuration;
         }
 
-        if (moveAlarm > 0f && playerStats.State != AI_StateMachine.state.Sleep && playerStats.State != AI_StateMachine.state.Wake && playerStats.State != AI_StateMachine.state.Float && stats.energy > stats.energyToTired)
+        if (moveAlarm > 0f && playerStats.State != AI_StateMachine.state.Sleep && playerStats.State != AI_StateMachine.state.Wake && playerStats.State != AI_StateMachine.state.Float && stats.energy > 5)
             playerStats.State = AI_StateMachine.state.Playing;
         else
         {

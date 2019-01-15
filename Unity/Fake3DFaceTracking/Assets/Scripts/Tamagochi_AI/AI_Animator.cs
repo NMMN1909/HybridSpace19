@@ -10,6 +10,7 @@ public class AI_Animator : MonoBehaviour {
     private AI_Roaming roaming;
     private AI_Upset upset;
     private AI_Respond respond;
+    public scr_Card card;
 
     private bool doOnce;
 
@@ -32,6 +33,8 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isWaking", true);
         else if (stateMachine.State == AI_StateMachine.state.Notice)
             animController.SetBool("isNotice", true);
+        else if (stateMachine.State == AI_StateMachine.state.Interact && card.isGiven)
+            animController.SetBool("isReadingCard", true);
         else if (stateMachine.State == AI_StateMachine.state.Interact)
             animController.SetBool("isIdle", true);
         else if(stateMachine.State == AI_StateMachine.state.WindowSlam)
@@ -39,7 +42,8 @@ public class AI_Animator : MonoBehaviour {
         else if (roaming.canMovForward || stateMachine.State == AI_StateMachine.state.Respond || stateMachine.State == AI_StateMachine.state.Upset || stateMachine.State == AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", true);
 
-        if(stateMachine.State != AI_StateMachine.state.Sleep)
+
+        if (stateMachine.State != AI_StateMachine.state.Sleep)
             animController.SetBool("isSleeping", false);
         if (stateMachine.State != AI_StateMachine.state.Wake)
             animController.SetBool("isWaking", false);
@@ -51,7 +55,7 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isIdle", false);
         if (!roaming.canMovForward && stateMachine.State != AI_StateMachine.state.Respond && stateMachine.State != AI_StateMachine.state.Upset && stateMachine.State != AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", false);
+        if (!card.isGiven || stateMachine.State != AI_StateMachine.state.Interact)
+            animController.SetBool("isReadingCard", false);
     }
-
-
 }

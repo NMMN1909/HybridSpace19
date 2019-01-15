@@ -5,7 +5,7 @@ using UnityEngine;
 public class AI_StateMachine : MonoBehaviour {
 
     //public enum states { Idle, Wandering, Respond, Interact, Annoy, Wake, Sleep, Playing, Grow, Colorize };
-    public enum state {Default, Roaming, Notice, Respond, Wake, Sleep, Interact, Upset, WindowSlam, Playing, Float, Grow, Colorize};
+    public enum state {Default, Roaming, Notice, Respond, Wake, Sleep, Interact, Upset, WindowSlam, Playing, ReadCard, Float, Grow, Colorize};
 
     //Reference
     private AI_Idle idle;
@@ -20,6 +20,8 @@ public class AI_StateMachine : MonoBehaviour {
     private AI_Upset upset;
     private AI_WindowSlam windowSlam;
     private AI_Playing playing;
+    private AI_Grow grow;
+    private AI_Colorize colorize;
 
     // Initialize the public variables
     public state State;
@@ -73,6 +75,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Cells();
                 controller.Face();
                 wake.Wake();
+
                 break;
 
             // The sleep playerState
@@ -117,6 +120,7 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Senses();
                 controller.Cells();
                 controller.Face();
+                grow.Grow(.0005f, .225f);
                 break;
 
             // The upset playerState
@@ -125,10 +129,19 @@ public class AI_StateMachine : MonoBehaviour {
                 controller.Senses();
                 controller.Cells();
                 controller.Face();
+                colorize.Colorize();
                 break;
 
             // The playing playerState
             case state.Playing:
+                controller.Brain();
+                controller.Senses();
+                controller.Cells();
+                controller.Face();
+                break;
+
+            // The readcard playerState
+            case state.ReadCard:
                 controller.Brain();
                 controller.Senses();
                 controller.Cells();
@@ -150,5 +163,7 @@ public class AI_StateMachine : MonoBehaviour {
         upset = GetComponent<AI_Upset>();
         windowSlam = GetComponent<AI_WindowSlam>();
         playing = GetComponent<AI_Playing>();
+        grow = GetComponent<AI_Grow>();
+        colorize = GetComponent<AI_Colorize>();
     }
 }

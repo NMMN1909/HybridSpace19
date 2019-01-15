@@ -7,6 +7,7 @@ public class AI_Wake : MonoBehaviour {
     private AI_StateMachine stateMachine;
     private AI_Controller controller;
     private AI_Variables stats;
+    private AI_Sleep sleep;
 
     private bool canWake;
 
@@ -15,6 +16,7 @@ public class AI_Wake : MonoBehaviour {
         controller = GetComponent<AI_Controller>();
         stateMachine = GetComponent<AI_StateMachine>();
         stats = GetComponent<AI_Variables>();
+        sleep = GetComponent<AI_Sleep>();
         canWake = true;
 	}
 
@@ -32,10 +34,21 @@ public class AI_Wake : MonoBehaviour {
         stats.happiness += 40;
         stats.amusement += 40;
         yield return new WaitForSeconds(2f);
-        stateMachine.State = AI_StateMachine.state.Notice;
-        controller.canNewState = true;
-        yield return new WaitForSeconds(.1f);
-        stats.isAwake = true;
-        canWake = true;
+
+        if (stateMachine.State == AI_StateMachine.state.Wake && sleep.disturbedBool) 
+        {
+            stateMachine.State = AI_StateMachine.state.Upset;
+            yield return new WaitForSeconds(.1f);
+            canWake = true;
+        }
+        else
+        {
+            stateMachine.State = AI_StateMachine.state.Notice;
+            controller.canNewState = true;
+            yield return new WaitForSeconds(.1f);
+            stats.isAwake = true;
+            canWake = true;
+        }
+
     }
 }
