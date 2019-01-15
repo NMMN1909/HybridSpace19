@@ -638,6 +638,16 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 161065269}
   m_Mesh: {fileID: 4300002, guid: 49dc24eeb8d0b7748a0ee140bb278988, type: 3}
+--- !u!4 &200929891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4449859951322658, guid: 281470a34b34f81498a2c3da33002b96,
+    type: 2}
+  m_PrefabInternal: {fileID: 53685195}
+--- !u!20 &200929892 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 20202851289437866, guid: 281470a34b34f81498a2c3da33002b96,
+    type: 2}
+  m_PrefabInternal: {fileID: 53685195}
 --- !u!1 &214247043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,7 +3737,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.43, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4090,7 +4100,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.43, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5888,7 +5898,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.43, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6387,7 +6397,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.43, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7210,8 +7220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fTInput: {fileID: 1939999206}
   useRAWData: 0
-  target: {fileID: 534669905}
-  cam: {fileID: 534669904}
+  target: {fileID: 200929891}
+  cam: {fileID: 200929892}
   positionScale: 0.0015
   positionLerpRate: 15
   rotationScale: -4

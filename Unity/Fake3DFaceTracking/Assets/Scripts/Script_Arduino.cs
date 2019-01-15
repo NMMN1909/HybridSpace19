@@ -111,6 +111,30 @@ public class Script_Arduino : MonoBehaviour
                 if (stateMachine.State == AI_StateMachine.state.Interact)
                     stateMachine.State = AI_StateMachine.state.Colorize;
                 break;
+
+            // Roze kaart
+            case 11:
+                break;
+
+            // Paarse kaart
+            case 12:
+                break;
+
+            // Slider position
+            case 13:
+                break;
+
+            case 14:
+                break;
+
+            case 15:
+                break;
+
+            case 16:
+                break;
+
+            case 17:
+                break;
         }
 	}
 
