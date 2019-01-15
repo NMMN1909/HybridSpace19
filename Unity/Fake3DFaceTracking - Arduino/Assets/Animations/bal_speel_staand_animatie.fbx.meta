@@ -1,0 +1,189 @@
+fileFormatVersion: 2
+guid: 416f8ac70458d8e4fa43a87e6b3b9537
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: bottomhead
+    100004: but
+    100006: hip
+    100008: joint1
+    100010: joint2
+    100012: joint3
+    100014: joint4
+    100016: L_ear1
+    100018: L_ear10
+    100020: L_ear11
+    100022: L_ear2
+    100024: L_ear3
+    100026: L_ear4
+    100028: L_ear5
+    100030: L_ear6
+    100032: L_ear7
+    100034: L_ear8
+    100036: L_ear9
+    100038: L_hand
+    100040: Lfinger1
+    100042: Lfinger1 1
+    100044: Lhand1
+    100046: Lshoulder
+    100048: Lthumb1
+    100050: Lthumb2
+    100052: R_ear1
+    100054: R_ear10
+    100056: R_ear11
+    100058: R_ear2
+    100060: R_ear3
+    100062: R_ear4
+    100064: R_ear5
+    100066: R_ear6
+    100068: R_ear7
+    100070: R_ear8
+    100072: R_ear9
+    100074: Rfinger1
+    100076: Rfinger2
+    100078: Rhand
+    100080: Rshoulder
+    100082: Rthumb1
+    100084: Rthumb2
+    100086: shoulder
+    100088: tophead
+    100090: totoro2:Mesh2
+    100092: totoro3:Mesh
+    400000: //RootNode
+    400002: bottomhead
+    400004: but
+    400006: hip
+    400008: joint1
+    400010: joint2
+    400012: joint3
+    400014: joint4
+    400016: L_ear1
+    400018: L_ear10
+    400020: L_ear11
+    400022: L_ear2
+    400024: L_ear3
+    400026: L_ear4
+    400028: L_ear5
+    400030: L_ear6
+    400032: L_ear7
+    400034: L_ear8
+    400036: L_ear9
+    400038: L_hand
+    400040: Lfinger1
+    400042: Lfinger1 1
+    400044: Lhand1
+    400046: Lshoulder
+    400048: Lthumb1
+    400050: Lthumb2
+    400052: R_ear1
+    400054: R_ear10
+    400056: R_ear11
+    400058: R_ear2
+    400060: R_ear3
+    400062: R_ear4
+    400064: R_ear5
+    400066: R_ear6
+    400068: R_ear7
+    400070: R_ear8
+    400072: R_ear9
+    400074: Rfinger1
+    400076: Rfinger2
+    400078: Rhand
+    400080: Rshoulder
+    400082: Rthumb1
+    400084: Rthumb2
+    400086: shoulder
+    400088: tophead
+    400090: totoro2:Mesh2
+    400092: totoro3:Mesh
+    2100000: totoro2_lambert2SG1
+    2100002: lambert2
+    2100004: lambert3
+    2100006: lambert5
+    4300000: totoro2:Mesh2
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: totoro2:Mesh2
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
