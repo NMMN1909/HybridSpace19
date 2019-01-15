@@ -10,6 +10,7 @@ public class AI_WindowSlam : MonoBehaviour {
     private AI_StateMachine stateMachine;
     private AI_Aware aware;
     private AI_Interact interact;
+    private AI_Sleep sleep;
 
     public Transform head;
     public Transform tamagochiHead;
@@ -26,6 +27,7 @@ public class AI_WindowSlam : MonoBehaviour {
         stateMachine = GetComponent<AI_StateMachine>();
         aware = GetComponent<AI_Aware>();
         interact = GetComponent<AI_Interact>();
+        sleep = GetComponent<AI_Sleep>();
         canWindowSlam = true;
     }
 	
@@ -60,12 +62,27 @@ public class AI_WindowSlam : MonoBehaviour {
 
     IEnumerator WindowSlamCycle()
     {
-        isWindowSlam = true;
-        yield return new WaitForSeconds(stats.windowSlamDuration);
-        stateMachine.State = AI_StateMachine.state.Notice;
-        yield return new WaitForSeconds(.1f);
-        isWindowSlam = false;
-        aware.isAware = false;
-        canWindowSlam = true;
+        if (sleep.disturbedBool)
+        {
+            isWindowSlam = true;
+            yield return new WaitForSeconds(stats.windowSlamDuration);
+            stateMachine.State = AI_StateMachine.state.Sleep;
+            yield return new WaitForSeconds(.1f);
+            sleep.disturbedBool = false;
+            isWindowSlam = false;
+            aware.isAware = false;
+            canWindowSlam = true;
+        }
+        else
+        {
+            isWindowSlam = true;
+            yield return new WaitForSeconds(stats.windowSlamDuration);
+            stateMachine.State = AI_StateMachine.state.Notice;
+            yield return new WaitForSeconds(.1f);
+            isWindowSlam = false;
+            aware.isAware = false;
+            canWindowSlam = true;
+        }
+
     }
 }

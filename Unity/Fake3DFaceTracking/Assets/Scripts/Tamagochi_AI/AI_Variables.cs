@@ -38,6 +38,8 @@ public class AI_Variables : MonoBehaviour {
     public int roamingSuccessRate;
     public int noticeSuccessRate;
 
+    public bool isGrowing = true;
+    public bool colorizeInit;
 
 
 
@@ -64,8 +66,8 @@ public class AI_Variables : MonoBehaviour {
         happyToSad = 20f;
 
         //Facial Values Init
-        energyToTired = 25;
-        happinessToHappy = 80;
+        energyToTired = 15;
+        happinessToHappy = 75;
         happinessToSad = 1;
         amusementToSad = 1;
         happinessToNeural = 25;
@@ -85,6 +87,6 @@ public class AI_Variables : MonoBehaviour {
         energy = 100f;
         happiness = 80f;
         amusement = 80f;
-        energyToWake = 100;
+        energyToWake = 99;
     }
 }

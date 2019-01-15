@@ -10,6 +10,7 @@ public class scr_Card : MonoBehaviour {
     public Animation animCardGive;
     public AudioSource audioSource;
     public AI_StateMachine stateMachine;
+    public AI_Variables stats;
 
     public float animDuration;
     public bool isGiven;
@@ -68,8 +69,12 @@ public class scr_Card : MonoBehaviour {
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(animDuration);
-        if (isGiven)
+        if (isGiven && stateMachine.State != AI_StateMachine.state.Sleep && stateMachine.State != AI_StateMachine.state.Wake)
+        {
             stateMachine.State = AI_StateMachine.state.Notice;
+            stats.amusement += 10;
+            stats.happiness += 5;
+        }
         canGive = true;
     }
 

@@ -132,8 +132,6 @@ public class AI_Controller : MonoBehaviour {
             canNewState = false;
         }
 
-
-
         //New State
         if (canNewState)
         {
@@ -163,7 +161,7 @@ public class AI_Controller : MonoBehaviour {
             {
                 stats.amusement -= 0f;
                 stats.happiness -= 0f;
-                stats.attention -= .05f;
+                stats.attention -= .1f;
                 stats.energy -= .02f;
             }
             else if (stateMachine.State == AI_StateMachine.state.Playing)
@@ -217,7 +215,7 @@ public class AI_Controller : MonoBehaviour {
                 emotionStateMachine.emotion = AI_EmotionState.Emotion.Tired;
 
             //Wondering
-            else if (stateMachine.State == AI_StateMachine.state.Notice || aware.isAware)
+            else if (stateMachine.State == AI_StateMachine.state.Notice)
                 emotionStateMachine.emotion = AI_EmotionState.Emotion.Wondering;
 
 
