@@ -19,9 +19,10 @@ public class AI_WindowSlam : MonoBehaviour {
 
     private bool canWindowSlam;
     private bool isWindowSlam;
+    public int upsetCounter;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         stats = GetComponent<AI_Variables>();
         controller = GetComponent<AI_Controller>();
         stateMachine = GetComponent<AI_StateMachine>();
@@ -29,6 +30,7 @@ public class AI_WindowSlam : MonoBehaviour {
         interact = GetComponent<AI_Interact>();
         sleep = GetComponent<AI_Sleep>();
         canWindowSlam = true;
+        upsetCounter = 0;
     }
 	
 	// Update is called once per frame
@@ -48,7 +50,15 @@ public class AI_WindowSlam : MonoBehaviour {
                 stateMachine.State = AI_StateMachine.state.Notice;
             }
         }
-	}
+
+        if (upsetCounter >= 2)
+            upsetCounter = 0;
+
+        if (upsetCounter == 0)
+            stats.upsetBool = true;
+        else
+            stats.upsetBool = false;
+    }
 
     public void WindowSlam()
     {
@@ -66,6 +76,7 @@ public class AI_WindowSlam : MonoBehaviour {
         {
             isWindowSlam = true;
             yield return new WaitForSeconds(stats.windowSlamDuration);
+            upsetCounter += 1;
             stateMachine.State = AI_StateMachine.state.Sleep;
             yield return new WaitForSeconds(.1f);
             sleep.disturbedBool = false;
@@ -77,6 +88,7 @@ public class AI_WindowSlam : MonoBehaviour {
         {
             isWindowSlam = true;
             yield return new WaitForSeconds(stats.windowSlamDuration);
+            upsetCounter += 1;
             stateMachine.State = AI_StateMachine.state.Notice;
             yield return new WaitForSeconds(.1f);
             isWindowSlam = false;

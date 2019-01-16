@@ -74,6 +74,7 @@ public class AI_Upset : MonoBehaviour {
                 stateMachine.State = AI_StateMachine.state.WindowSlam;
                 canUpset = true;
                 isUpset = false;
+
             }
         }
 	}

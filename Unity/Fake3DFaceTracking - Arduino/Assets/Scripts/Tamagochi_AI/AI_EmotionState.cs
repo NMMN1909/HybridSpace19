@@ -12,6 +12,7 @@ public class AI_EmotionState : MonoBehaviour {
     public AI_ThinkingCloud cloud;
     public GameObject thinkingCloudObj;
     private AI_Variables stats;
+    private AI_Sleep sleep;
 
     //Initialze
     public Emotion emotion;
@@ -37,7 +38,7 @@ public class AI_EmotionState : MonoBehaviour {
             case Emotion.Tired:
                 //Play Tired Animation
                 animator.runtimeAnimatorController = animationController[2];
-                if(stats.energy > stats.energyToTired)
+                if(stats.energy > stats.energyToTired && sleep.disturbedBool == false)
                     thinkingCloudObj.GetComponent<SpriteRenderer>().sprite = cloud.thinkingCloud[0];
                 else
                     thinkingCloudObj.GetComponent<SpriteRenderer>().sprite = cloud.thinkingCloud[1];
@@ -78,6 +79,7 @@ public class AI_EmotionState : MonoBehaviour {
     private void Start()
     {
         stats = GetComponent<AI_Variables>();
+        sleep = GetComponent<AI_Sleep>();
     }
 
     /*

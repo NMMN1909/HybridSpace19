@@ -221,12 +221,21 @@ public class AI_Controller : MonoBehaviour {
 
         //Asleep
         if (!stats.isAwake)
-            emotionStateMachine.emotion = AI_EmotionState.Emotion.Asleep;
+            if(sleep.disturbedBool && stats.upsetBool)
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Upset;
+            else if (sleep.disturbedBool)
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Tired;
+            else
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Asleep;
         else
         {
             //Tired
             if (stats.energy < stats.energyToTired || arduino.pointLights.activeSelf == false)
                 emotionStateMachine.emotion = AI_EmotionState.Emotion.Tired;
+
+            //Upset
+            else if((stateMachine.State == AI_StateMachine.state.Upset || stateMachine.State == AI_StateMachine.state.WindowSlam) && emotionStateMachine.emotion != AI_EmotionState.Emotion.Tired && stats.upsetBool)
+                emotionStateMachine.emotion = AI_EmotionState.Emotion.Upset;
 
             //Wondering
             else if (stateMachine.State == AI_StateMachine.state.Notice)
@@ -321,6 +330,5 @@ public class AI_Controller : MonoBehaviour {
     {
         yield return new WaitForSeconds(1);
         stats.energy = 15;
-        Debug.Log("askldasmdalkdmasdsad");
     }
 }

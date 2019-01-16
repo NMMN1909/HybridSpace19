@@ -36,6 +36,9 @@ public class AI_Aware : MonoBehaviour {
             tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(head.position), .5f);
         else
             tamagochiHead.transform.rotation = Quaternion.Slerp(tamagochiHead.transform.rotation, Quaternion.LookRotation(this.transform.forward), .5f);
+
+        if(!stats.isAwake)
+            StopAllCoroutines();
     }
 
     private void LateUpdate()

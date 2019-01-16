@@ -33,6 +33,7 @@ public class AI_Variables : MonoBehaviour {
     public float happinessToNeural;
 
     public bool isAwake;
+    public bool upsetBool;
 
     public int idleSuccessRate;
     public int roamingSuccessRate;
@@ -64,7 +65,7 @@ public class AI_Variables : MonoBehaviour {
         happyToSad = 20f;
 
         //Facial Values Init
-        energyToTired = 15;
+        energyToTired = 1;
         happinessToHappy = 75;
         happinessToSad = 1;
         amusementToSad = 1;

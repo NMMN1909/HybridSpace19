@@ -22,9 +22,9 @@ public class AI_ThinkingCloud : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        offsetX = 1;
-        offsetY = 2.5f;
-        offsetZ = -1f;
+        offsetX = 1f;
+        offsetY = 3.5f;
+        offsetZ = -1.5f;
         thinkingCloudBool = false;
         thinkingCloudTimer = 400;
         thinkingCloudCounter = 0;
