@@ -42,6 +42,7 @@ public class AI_Animator : MonoBehaviour {
         else if (roaming.canMovForward || stateMachine.State == AI_StateMachine.state.Respond || stateMachine.State == AI_StateMachine.state.Upset || stateMachine.State == AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", true);
 
+
         if (stateMachine.State != AI_StateMachine.state.Sleep)
             animController.SetBool("isSleeping", false);
         if (stateMachine.State != AI_StateMachine.state.Wake)
