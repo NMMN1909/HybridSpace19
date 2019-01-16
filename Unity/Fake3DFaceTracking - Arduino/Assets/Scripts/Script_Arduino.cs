@@ -78,7 +78,7 @@ public class Script_Arduino : MonoBehaviour
 	void ScreenTik (int id)
 	{
         Debug.Log(id);
-        if (id == 9 || id == 10)
+        if (id == 9 || id == 10 || id == 11)
             card.cardInserted = true;
 
 
@@ -101,29 +101,30 @@ public class Script_Arduino : MonoBehaviour
             //
             case 8:
                 card.cardInserted = false;
+                card.cardIsUsed = false;
                 break;
 
             // Groene kaart
             case 9:
                 if (stateMachine.State == AI_StateMachine.state.Interact)
-                {
-                    stateMachine.State = AI_StateMachine.state.Grow;
-                    Debug.Log("Card Insterted");
-                }
-
-                break;
-
-            // Blauwe kaart
-            case 10:
-                if (stateMachine.State == AI_StateMachine.state.Interact)
-                    stateMachine.State = AI_StateMachine.state.Colorize;
+                    card.cardID = 0;
+                    //stateMachine.State = AI_StateMachine.state.Grow;
                 break;
 
             // Roze kaart
-            case 11:
+            case 10:
+                if (stateMachine.State == AI_StateMachine.state.Interact)
+                    card.cardID = 1;
+                    //stateMachine.State = AI_StateMachine.state.Colorize;
                 break;
 
             // Paarse kaart
+            case 11:
+                if (stateMachine.State == AI_StateMachine.state.Interact)
+                    card.cardID = 2;
+                break;
+
+            // Blauwe kaart
             case 12:
                 break;
 

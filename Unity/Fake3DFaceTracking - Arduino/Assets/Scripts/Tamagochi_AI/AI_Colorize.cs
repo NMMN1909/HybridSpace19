@@ -7,10 +7,11 @@ public class AI_Colorize : MonoBehaviour {
     private AI_Variables stats;
     private AI_StateMachine stateMachine;
 
-
     private float materialLerpProgress;
     private Material targetMat0;
-    private Material targetMat1;
+    private int targetMat1;
+
+    private int materialID;
 
     public Material[] creatureMaterials;
     public Material playerMaterial;
@@ -32,18 +33,28 @@ public class AI_Colorize : MonoBehaviour {
         {
             materialLerpProgress = 0f;
 
+            /*
             targetMat0 = playerMaterial;
             targetMat1 = creatureMaterials[Mathf.RoundToInt(Random.Range(0f, creatureMaterials.Length - 1f))];
 
             while (targetMat1.color.Equals(targetMat0.color))
                 targetMat1 = creatureMaterials[Mathf.RoundToInt(Random.Range(0f, creatureMaterials.Length - 1f))];
+            */
+
+            targetMat0 = playerMaterial;
+            targetMat1 = Mathf.RoundToInt(Random.Range(0f, creatureMaterials.Length - 1f));
+
+            while (targetMat1 == materialID)
+                targetMat1 = Mathf.RoundToInt(Random.Range(0f, creatureMaterials.Length - 1f));
+
+            materialID = targetMat1;
 
             stats.attention += 10f;
             stats.colorizeInit = true;
         }
 
         materialLerpProgress += .01f;
-        playerMaterial.Lerp(targetMat0, targetMat1, materialLerpProgress);
+        playerMaterial.Lerp(targetMat0, creatureMaterials[targetMat1], materialLerpProgress);
 
         if (materialLerpProgress >= 1f)
         {

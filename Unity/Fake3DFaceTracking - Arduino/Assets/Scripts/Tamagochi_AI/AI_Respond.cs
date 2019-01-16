@@ -70,7 +70,7 @@ public class AI_Respond : MonoBehaviour {
         if (canRespond)
         {
             StartCoroutine(RespondCycle());
-            stats.attention += Random.Range(10, 30);
+            stats.attention += Random.Range(10f, 30f);
             canRespond = false;
         }
     }

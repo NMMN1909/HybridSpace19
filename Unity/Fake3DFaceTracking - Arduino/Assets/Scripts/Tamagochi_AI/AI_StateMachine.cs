@@ -5,7 +5,7 @@ using UnityEngine;
 public class AI_StateMachine : MonoBehaviour {
 
     //public enum states { Idle, Wandering, Respond, Interact, Annoy, Wake, Sleep, Playing, Grow, Colorize };
-    public enum state {Default, Roaming, Notice, Respond, Wake, Sleep, Interact, Upset, WindowSlam, Playing, ReadCard, Float, Grow, Colorize};
+    public enum state {Default, Roaming, Notice, Respond, Wake, Sleep, Interact, Upset, WindowSlam, Playing, ReadCard, Float, Grow, Colorize, Duplicate};
 
     //Reference
     private AI_Idle idle;
@@ -22,6 +22,8 @@ public class AI_StateMachine : MonoBehaviour {
     private AI_Playing playing;
     private AI_Grow grow;
     private AI_Colorize colorize;
+    private AI_ReadCard readCard;
+    private AI_duplicate duplicate;
 
     // Initialize the public variables
     public state State;
@@ -117,17 +119,13 @@ public class AI_StateMachine : MonoBehaviour {
             // The upset playerState
             case state.Grow:
                 controller.Senses();
-                //controller.Cells();
                 controller.Face();
-                Debug.Log("Grow State");
                 grow.Grow(.05f, 18f); //
                 break;
 
             // The upset playerState
             case state.Colorize:
-                controller.Brain();
                 controller.Senses();
-                controller.Cells();
                 controller.Face();
                 colorize.Colorize();
                 break;
@@ -142,10 +140,16 @@ public class AI_StateMachine : MonoBehaviour {
 
             // The readcard playerState
             case state.ReadCard:
-                controller.Brain();
                 controller.Senses();
-                controller.Cells();
                 controller.Face();
+                readCard.ReadCard();
+                break;
+
+            // The duplicate playerState
+            case state.Duplicate:
+                controller.Senses();
+                controller.Face();
+                duplicate.Duplicate();
                 break;
         }
     }
@@ -165,5 +169,7 @@ public class AI_StateMachine : MonoBehaviour {
         playing = GetComponent<AI_Playing>();
         grow = GetComponent<AI_Grow>();
         colorize = GetComponent<AI_Colorize>();
+        readCard = GetComponent<AI_ReadCard>();
+        duplicate = GetComponent<AI_duplicate>();
     }
 }

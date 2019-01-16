@@ -13,6 +13,7 @@ public class AI_Interact : MonoBehaviour {
 
     public Transform tamagochiHead;
     public Transform head;
+    public scr_Card card;
 
     public bool isInteract;
     public bool canInteract;
@@ -37,6 +38,11 @@ public class AI_Interact : MonoBehaviour {
             canInteract = true;
             isInteract = false;
             StopAllCoroutines();
+        }
+        else
+        {
+            if (card.cardInserted && !card.cardIsUsed)
+                stateMachine.State = AI_StateMachine.state.ReadCard;
         }
 
         if (isInteract && stats.attention > stats.attentionToInteract && stateMachine.State == AI_StateMachine.state.Interact)

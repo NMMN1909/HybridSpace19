@@ -41,8 +41,6 @@ public class AI_Variables : MonoBehaviour {
     public bool isGrowing = true;
     public bool colorizeInit;
 
-
-
     //Facial Expression Values
     public float energyToTired;
     public float happinessToHappy;

@@ -17,6 +17,9 @@ public class scr_Card : MonoBehaviour {
     public bool canGive;
     public bool cardInserted;
 
+    public int cardID;
+    public bool cardIsUsed;
+
     //Color
     private Color32 greenColor;
     private Color32 blueColor;
@@ -69,12 +72,14 @@ public class scr_Card : MonoBehaviour {
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(animDuration);
+        /*
         if (isGiven && stateMachine.State != AI_StateMachine.state.Sleep && stateMachine.State != AI_StateMachine.state.Wake && stateMachine.State != AI_StateMachine.state.Grow)
         {
-            stateMachine.State = AI_StateMachine.state.Notice;
+            stateMachine.State = AI_StateMachine.state.Respond;
             stats.amusement += 10;
             stats.happiness += 5;
         }
+        */
         canGive = true;
     }
 

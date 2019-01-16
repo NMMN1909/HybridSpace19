@@ -33,7 +33,7 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isWaking", true);
         else if (stateMachine.State == AI_StateMachine.state.Notice)
             animController.SetBool("isNotice", true);
-        else if (stateMachine.State == AI_StateMachine.state.Interact && card.isGiven)
+        else if (stateMachine.State == AI_StateMachine.state.ReadCard)
             animController.SetBool("isReadingCard", true);
         else if (stateMachine.State == AI_StateMachine.state.Interact)
             animController.SetBool("isIdle", true);
@@ -55,7 +55,7 @@ public class AI_Animator : MonoBehaviour {
             animController.SetBool("isIdle", false);
         if (!roaming.canMovForward && stateMachine.State != AI_StateMachine.state.Respond && stateMachine.State != AI_StateMachine.state.Upset && stateMachine.State != AI_StateMachine.state.Playing)
             animController.SetBool("isRoaming", false);
-        if (!card.isGiven || stateMachine.State != AI_StateMachine.state.Interact)
+        if (stateMachine.State != AI_StateMachine.state.ReadCard)
             animController.SetBool("isReadingCard", false);
     }
 }
