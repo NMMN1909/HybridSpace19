@@ -14,7 +14,8 @@ public class AI_Controller : MonoBehaviour {
     private AI_EmotionState emotionStateMachine;
     public scr_Card card;
     public Script_Arduino arduino;
-    public AI_Wake wake;
+    private AI_Wake wake;
+    public AI_ThinkingCloud cloud;
 
     private int idleFailRate;
     public bool canNewState;
@@ -35,6 +36,8 @@ public class AI_Controller : MonoBehaviour {
     public Slider happySlider;
     public Slider amusementSlider;
     public Slider affectionSlider;
+
+    public Animation anim;
 
     // Use this for initialization
     void Start () {
@@ -261,25 +264,28 @@ public class AI_Controller : MonoBehaviour {
     private void DebugController()
     {
         if (Input.GetKeyDown(KeyCode.Z))
-            stats.energy += 10f;
+            stats.energy -= 5f;
 
         if (Input.GetKeyDown(KeyCode.X))
-            stats.happiness += 10f;
+            stats.happiness -= 5f;
 
         if (Input.GetKeyDown(KeyCode.C))
-            stats.amusement += 10f;
+            stats.amusement -= 5f;
 
         if (Input.GetKeyDown(KeyCode.V))
-            stats.attention += 10f;
+            stats.attention -= 5f;
 
         if (Input.GetKeyDown(KeyCode.A))
-            stateMachine.State = AI_StateMachine.state.Default;
+            stats.energy += 5f;
 
         if (Input.GetKeyDown(KeyCode.S))
-            stateMachine.State = AI_StateMachine.state.Roaming;
+            stats.happiness += 5f;
 
         if (Input.GetKeyDown(KeyCode.D))
-            aware.Aware();
+            stats.attention += 5f;
+
+        if (Input.GetKeyDown(KeyCode.F))
+            stats.amusement += 5f;
 
         if (Input.GetKeyDown(KeyCode.E))
             stateMachine.State = AI_StateMachine.state.Respond;
@@ -288,6 +294,26 @@ public class AI_Controller : MonoBehaviour {
             stateMachine.State = AI_StateMachine.state.Upset;
 
         if (Input.GetKeyDown(KeyCode.Q))
+            stateMachine.State = AI_StateMachine.state.Default;
+
+        if (Input.GetKeyDown(KeyCode.W))
+            stateMachine.State = AI_StateMachine.state.Notice;
+
+        if (Input.GetKeyDown(KeyCode.E))
+            stateMachine.State = AI_StateMachine.state.Respond;
+
+        if (Input.GetKeyDown(KeyCode.R))
+            stateMachine.State = AI_StateMachine.state.Roaming;
+
+        if (Input.GetKeyDown(KeyCode.T))
+            aware.Aware();
+
+        if (Input.GetKeyDown(KeyCode.CapsLock))
+            cloud.thinkingCloudBool = true;
+
+        if (Input.GetKeyDown(KeyCode.RightControl))
+            anim.Play("Creature_Float");
+        if(Input.GetKeyDown(KeyCode.Escape))
             stopAllCoroutines = true;
 
         //Interact With Tamagochi
@@ -324,6 +350,5 @@ public class AI_Controller : MonoBehaviour {
     {
         yield return new WaitForSeconds(1);
         stats.energy = 15;
-        Debug.Log("askldasmdalkdmasdsad");
     }
 }

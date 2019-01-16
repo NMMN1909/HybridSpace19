@@ -5,6 +5,9 @@ using UnityEngine;
 public class AI_Roaming : MonoBehaviour {
 
     //Reference
+    public AudioSource audioSource;
+    public AudioClip[] audioClip;
+
     public Transform interactionManager;
     private Vector3 physicsCentre;
     public RaycastHit hit;
