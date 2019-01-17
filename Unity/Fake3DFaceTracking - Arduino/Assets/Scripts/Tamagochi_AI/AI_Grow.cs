@@ -28,7 +28,7 @@ public class AI_Grow : MonoBehaviour {
             stateMachine.State = AI_StateMachine.state.Roaming;
         }
 
-        if (transform.localScale.x <= 12f && !stats.isGrowing)
+        if (transform.localScale.x <= 18f && !stats.isGrowing)
         {
             stats.attention += 5f;
             stats.isGrowing = true;

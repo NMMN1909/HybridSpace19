@@ -13,6 +13,10 @@ public class Script_Arduino : MonoBehaviour
     public AI_StateMachine stateMachine;
     public AI_Variables stats;
     public GameObject pointLights;
+    public GameObject lightSphere;
+    public Renderer _renderer;
+    public Material lightOn;
+    public Material lightOff;
     public GameObject player;
     public scr_poleMove poleMove;
     public AI_Aware aware;
@@ -78,23 +82,33 @@ public class Script_Arduino : MonoBehaviour
 	void ScreenTik (int id)
 	{
         Debug.Log(id);
-        if (id == 9 || id == 10 || id == 11)
+        if (id == 9 || id == 12 || id == 11)
+        {
             card.cardInserted = true;
-
+            stats.attention = 99f;
+        }
 
         switch (id)
         {
             // Lampje
             case 1:
                 if (pointLights.activeSelf)
+                {
                     pointLights.SetActive(false);
+                    lightSphere.SetActive(false);
+                    _renderer.material = lightOff;
+                }
                 else
+                {
                     pointLights.SetActive(true);
+                    lightSphere.SetActive(true);
+                    _renderer.material = lightOn;
+                }
                 break;
 
             // Tikken
             case 2:
-                stats.attention += UnityEngine.Random.Range(20, 35);
+                stats.attention += 50f;
                 aware.Aware();
                 break;
 
@@ -115,7 +129,7 @@ public class Script_Arduino : MonoBehaviour
             case 10:
                 if (stateMachine.State == AI_StateMachine.state.Interact)
                     card.cardID = 1;
-                    //stateMachine.State = AI_StateMachine.state.Colorize;
+                //stateMachine.State = AI_StateMachine.state.Colorize;
                 break;
 
             // Paarse kaart
@@ -126,6 +140,8 @@ public class Script_Arduino : MonoBehaviour
 
             // Blauwe kaart
             case 12:
+                if (stateMachine.State == AI_StateMachine.state.Interact)
+                    card.cardID = 1;
                 break;
 
             // Slider position

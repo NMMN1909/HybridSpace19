@@ -120,7 +120,7 @@ public class AI_StateMachine : MonoBehaviour {
             case state.Grow:
                 controller.Senses();
                 controller.Face();
-                grow.Grow(.05f, 18f); //
+                grow.Grow(.05f, 24f); //
                 break;
 
             // The upset playerState
